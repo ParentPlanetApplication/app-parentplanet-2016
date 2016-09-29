@@ -1,0 +1,46 @@
+<div class="empty-space-item hidden"></div> 
+{{#if mobile}}  
+<div class="menu-item border-top hidden">    
+    <div class="text-left">Calendar Auto-Sync</div> 
+    <div class="switch-right">  
+        <div class="toggle">    
+            <input id="calendarAustoSyncBtn" type="checkbox" name="toggle9" class="toggle9">    
+        </div>  
+    </div>  
+</div>  
+<div id="calendar-sync-with" class="menu-item border-top hidden">
+    <div class="text-left">Sync With</div>
+    <div id="calendar-to-Sync" class="calendar-selected">
+        <span id="calendarToSync">None</span>
+        <i class="icon-right-open"></i>
+    </div>
+</div>
+
+<div id="calendar-picker" class="time-picker hidden">
+    <div class="bg"></div>
+    <div class="box-wrapper">
+        <div class="title-wrapper">Calendars</div>
+        <div id="calendar-picker-list" class="time-wrapper">
+        </div>
+    </div>
+</div>
+
+
+{{/if}}
+<div class="menu-item border-top hidden">  
+    <div class="text-left">Alerts</div> 
+    <div class="switch-right">  
+        <div class="toggle">    
+            <input id="alertsBtn" type="checkbox" name="toggle9" class="toggle9">    
+        </div>  
+    </div>  
+</div>
+{{!  
+<div id="contactPermissionsBtn" class="menu-item hidden">  
+    <div class="text-left">Contact Permissions</div>    
+    <div class="icon-right">   
+        <i class="icon-right-open"></i> 
+    </div>  
+</div>
+}}
+<div class="empty-space-item hidden"></div>
