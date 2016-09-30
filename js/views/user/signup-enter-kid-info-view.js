@@ -135,16 +135,16 @@ define([
                 var queue = function(i) {
                     var deferred = createChild(i);
                     function done() {
-                        _confirm("New account created successfully. Please login to continue.")
-                        .then(redirect);
+                        _alert("New account created successfully. Please login to continue.");
+                        redirect('signin');
                     };
                     function next() { //go on to the next one
                         i++;
                         i < len ? queue(i) : done();
                     }; 
                     function fail() { //let the user know there has been a problem and then proceed
-                        _confirm('Unable to add '+firstName+' '+lastName+' to the parent account')
-                        .then(next);
+                        _alert('Unable to add ' + firstName + ' ' + lastName + ' to the parent account');
+                        next();
                     }
                     deferred.then(next);
                     deferred.fail(fail);
@@ -163,8 +163,8 @@ define([
                     redirect('signup-enter-user-info');    
                 });
                 $('#skipBtn').on('click', function(e) {
-                    _confirm("New account created successfully. Please login to continue.")
-                    redirect();
+                    _alert("New account created successfully. Please login to continue.")
+                    redirect('signin');
                 });
                 $("#addBtn").on('click', function(e) {
                     childNo++;

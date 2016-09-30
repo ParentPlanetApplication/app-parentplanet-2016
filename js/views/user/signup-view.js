@@ -36,8 +36,8 @@ define(
 						_alert( "Please enter a valid email address" );
 					} else if ( password != verifyPassword ) {
 						_alert( "Your password does not match the entered one" )
-					} else if ( !password.match( /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,14})$/ ) ) {
-						_alert( "Password must contain at least 8 characters with at least 1 number, at least 1 lowercase letter, at least 1 uppercase letter and no special characters" )
+					} else if ( password.length < 8 ) {
+						_alert( "Password must contain at least 8 characters" )
 					} else {
 						spinner.show();
 						_signupEmail = email;

@@ -24,7 +24,7 @@ define(
             }; //eo scrollFieldTop
             var done = function() { //no children simply login
                 _alert("New account created successfully. Please login to continue.");
-                redirect();
+                redirect('signin');
             };
             var enterChildInfo = function() { //go to the kids info section
                 redirect('signup-enter-kid-info');

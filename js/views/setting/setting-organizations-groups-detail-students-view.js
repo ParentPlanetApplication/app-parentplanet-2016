@@ -11,13 +11,10 @@ define([
     var selectedStudentIdArray;
     var userStudentIdFromRelationArray;
     var userOrganizationGroupRelation;
-    var selectedOrgId;
-    var selectedOrgData;
     var studentIdArray;
     var studentDataArray;
     var studentNameArray;
     var selectedOrgGroupId;
-    var selectedOrgGroupData;
     var spinner = null;
     var deferred;
     var initData = function() {
@@ -26,30 +23,27 @@ define([
         studentIdArray = [];
         studentNameArray = [];
         user = _getUserData();
-        selectedOrgId = user.setting.selectedOrgId;
-        selectedOrgData = user.setting.selectedOrgData;
         selectedOrgGroupId = user.setting.selectedOrgGroupId;
-        selectedOrgGroupData = user.setting.selectedOrgGroupData;
     }; //eo initData
     var error = function(err) {
-        console.log('Error: setting-organizations-groups-detail-students:'+err.code+' '+err.message);
+        console.log('Error: setting-organizations-groups-detail-students:' + err.code + ' ' + err.message);
         deferred ? deferred.resolve() : $.noop();
     }; //eo top-scope error function
     var redirect = function() {
-        Chaplin.utils.redirectTo({    name: 'setting-organizations-groups-detail'    });
+        Chaplin.utils.redirectTo({ name: 'setting-organizations-groups-detail' });
     };
     var initButtons = function() { //Init buttons
         $("#backBtn").on('click', function(e) { redirect(); });
-        $("#addStudentBtn").on('click', function(e) {  //add student
-            Chaplin.utils.redirectTo({    name: 'setting-organizations-groups-detail-students-add'    });
+        $("#addStudentBtn").on('click', function(e) { //add student
+            Chaplin.utils.redirectTo({ name: 'setting-organizations-groups-detail-students-add' });
         });
     }; //eo initButtons
     var loadStudents = function() {
         //Load relations
         var UserOrganizationGroupRelation = Parse.Object.extend("UserOrganizationGroupRelation", {}, {
-          query: function(){
-            return new Parse.Query(this.className);
-          }
+            query: function() {
+                return new Parse.Query(this.className);
+            }
         });
         var query = UserOrganizationGroupRelation.query();
         spinner = _createSpinner('spinner');
@@ -62,6 +56,7 @@ define([
                     $("#content").html('<div class="results-not-found">No students found in this group</div>');
                     deferred.resolve();
                 };
+
                 function hasResults() {
                     var childIdArray = [];
                     $.each(results, function(i, relation) {
@@ -70,9 +65,9 @@ define([
                     });
                     //Load students
                     var Child = Parse.Object.extend("Child", {}, {
-                      query: function(){
-                        return new Parse.Query(this.className);
-                      }
+                        query: function() {
+                            return new Parse.Query(this.className);
+                        }
                     });
                     var query = Child.query();
                     query.containedIn("objectId", childIdArray);
@@ -85,11 +80,11 @@ define([
                             } else {
                                 $("#content").empty();
                                 $.each(results, function(i, child) {
-                                    $("#content").append('<div id="'
-                                        + child.id
-                                        + '" class="menu-item full-width"><div class="text-left" style="width:74%;"><div class="circle-icon-wrapper"><i class="icon-fontello-circle icon-grey"></i></div><span>'
-                                        + child.get("firstName") + " " + child.get("lastName")
-                                        + '</span></div><div class="delete hidden">Delete</div></div>');
+                                    $("#content").append('<div id="' +
+                                        child.id +
+                                        '" class="menu-item full-width"><div class="text-left" style="width:74%;"><div class="circle-icon-wrapper"><i class="icon-fontello-circle icon-grey"></i></div><span>' +
+                                        child.get("firstName") + " " + child.get("lastName") +
+                                        '</span></div><div class="delete hidden">Delete</div></div>');
                                     studentIdArray.push(child.id);
                                     studentNameArray.push(child.get("firstName") + " " + child.get("lastName"));
                                 });
@@ -136,8 +131,17 @@ define([
                         promises.push(deferred);
                         deferred = deleteUserMessageRelations(groupId, studentId, arr);
                         promises.push(deferred);
-                        $.when.apply($,promises).then(function() {
+                        $.when.apply($, promises).then(function() {
                             console.log("Successfully remove student from a group: " + groupId);
+                            var user = _getUserData();
+                            var groupRelation = user.setting.selectedOrgGroupStudentRelationData;
+                            if (groupRelation) {
+                                user.setting.selectedOrgGroupStudentRelationData =
+                                    groupRelation.filter((function(item) {
+                                        return item.userId != studentId;
+                                    }));
+                                _setUserData(user);
+                            }
                         });
                     }; //eo deleteFromLists
                     selectedStudentIdArrayCopy ? deleteFromLists(selectedStudentIdArrayCopy) : deleteFromLists(null);
@@ -149,9 +153,9 @@ define([
     }; //eo deleteStudent
     var deleteStudentFromOrganizationGroup = function(groupId, studentId) { //delete student from studentIdList array in OrganizationGroup
         var OrganizationGroup = Parse.Object.extend("OrganizationGroup", {}, {
-          query: function(){
-            return new Parse.Query(this.className);
-          }
+            query: function() {
+                return new Parse.Query(this.className);
+            }
         });
         var query = OrganizationGroup.query();
         var deferred = $.Deferred();
@@ -161,7 +165,7 @@ define([
                 var group = results[0];
                 var studentIdList = group.get("studentIdList");
                 var index = studentIdList.indexOf(studentId);
-                if (index !== -1) {    studentIdList.splice(index, 1);    }
+                if (index !== -1) { studentIdList.splice(index, 1); }
                 group.save();
                 deferred.resolve();
             },
@@ -171,9 +175,9 @@ define([
     }; //eo deleteStudentFromOrganizationGroup
     var deleteStudentFromCustomList = function(groupId, studentId, selectedStudentIdArrayCopy) {
         var UserCustomList = Parse.Object.extend("UserCustomList", {}, {
-          query: function(){
-            return new Parse.Query(this.className);
-          }
+            query: function() {
+                return new Parse.Query(this.className);
+            }
         });
         var query = UserCustomList.query();
         var deferred = $.Deferred();
@@ -181,6 +185,7 @@ define([
         query.find({
             success: function(results) {
                 var recipientList, recipientArray;
+
                 function deleteFromRecipeintArray(customList) {
                     $.each(recipientArray, function(j, recipient) {
                         var oneChild = function() {
@@ -191,9 +196,9 @@ define([
                             deferred.resolve();
                         }; //eo oneChild
                         var moreChildren = function() {
-                            var newList = jQuery.grep(recipient.children, function(n) {    return n != studentId;    });
+                            var newList = jQuery.grep(recipient.children, function(n) { return n != studentId; });
                             var hasArrayCopy = function() {
-                                var allDeletedList = jQuery.grep(newList, function(n) {    return selectedStudentIdArrayCopy.indexOf(n) == -1    });
+                                var allDeletedList = jQuery.grep(newList, function(n) { return selectedStudentIdArrayCopy.indexOf(n) == -1 });
                                 if (allDeletedList.length === 0) {
                                     var parent = recipient.parent;
                                     _deleteParentEmail(parent, customList, selectedOrgGroupId);
@@ -227,9 +232,9 @@ define([
     }; //eo deleteStudentFromCustomList
     var deleteUserEventRelations = function(groupId, studentId, selectedStudentIdArrayCopy) {
         var UserEventRelation = Parse.Object.extend("UserEventRelation", {}, {
-          query: function(){
-            return new Parse.Query(this.className);
-          }
+            query: function() {
+                return new Parse.Query(this.className);
+            }
         });
         var query = UserEventRelation.query();
         var selectedStudentIdArrayCopy = selectedStudentIdArrayCopy ? selectedStudentIdArrayCopy : [];
@@ -238,7 +243,7 @@ define([
         query.equalTo("groupId", groupId);
         query.find({
             success: function(results) {
-                $.each(results, function(i, relation){
+                $.each(results, function(i, relation) {
                     var childIdList = relation.get("childIdList");
                     var allDeletedList = jQuery.grep(childIdList, function(n) {
                         return selectedStudentIdArrayCopy.indexOf(n) != -1
@@ -258,9 +263,9 @@ define([
     }; //eo deleteUserEventRelations
     var deleteUserHomeworkRelations = function(groupId, studentId, selectedStudentIdArrayCopy) {
         var UserHomeworkRelation = Parse.Object.extend("UserHomeworkRelation", {}, {
-          query: function(){
-            return new Parse.Query(this.className);
-          }
+            query: function() {
+                return new Parse.Query(this.className);
+            }
         });
         var query = UserHomeworkRelation.query();
         var selectedStudentIdArrayCopy = selectedStudentIdArrayCopy ? selectedStudentIdArrayCopy : [];
@@ -269,7 +274,7 @@ define([
         query.equalTo("groupId", groupId);
         query.find({
             success: function(results) {
-                $.each(results, function(i, relation){
+                $.each(results, function(i, relation) {
                     var childIdList = relation.get("childIdList");
                     var allDeletedList = jQuery.grep(childIdList, function(n) {
                         return selectedStudentIdArrayCopy.indexOf(n) != -1
@@ -290,9 +295,9 @@ define([
 
     var deleteUserMessageRelations = function(groupId, studentId, selectedStudentIdArrayCopy) {
         var UserMessageRelation = Parse.Object.extend("UserMessageRelation", {}, {
-          query: function(){
-            return new Parse.Query(this.className);
-          }
+            query: function() {
+                return new Parse.Query(this.className);
+            }
         });
         var query = UserMessageRelation.query();
         var selectedStudentIdArrayCopy = selectedStudentIdArrayCopy ? selectedStudentIdArrayCopy : [];
@@ -300,7 +305,7 @@ define([
         query.equalTo("groupId", groupId);
         query.find({
             success: function(results) {
-                $.each(results, function(i, relation){
+                $.each(results, function(i, relation) {
                     var childIdList = relation.get("childIdList");
                     var allDeletedList = jQuery.grep(childIdList, function(n) {
                         return selectedStudentIdArrayCopy.indexOf(n) != -1
@@ -353,7 +358,7 @@ define([
                 }, 1000, function() {
                     $(this).remove();
                 });
-                $('#'+studentId).addClass("hidden");
+                $('#' + studentId).addClass("hidden");
                 deleteStudent(studentId);
             });
         });
@@ -374,13 +379,13 @@ define([
             $("#content").empty();
             $.each(targetStudentDataArray, function(i, child) {
                 var append = function(cls) {
-                    $("#content").append('<div id="'
-                        + child.id
-                        + '" class="menu-item"><div class="text-left" style="width:74%;"><div class="circle-icon-wrapper"><i class="icon-fontello-ok-circled '
-                        +cls
-                        +'"></i></div> <span>'
-                        + child.get("firstName") + " " + child.get("lastName")
-                        + '</span></div><div class="delete hidden">Delete</div></div>');
+                    $("#content").append('<div id="' +
+                        child.id +
+                        '" class="menu-item"><div class="text-left" style="width:74%;"><div class="circle-icon-wrapper"><i class="icon-fontello-ok-circled ' +
+                        cls +
+                        '"></i></div> <span>' +
+                        child.get("firstName") + " " + child.get("lastName") +
+                        '</span></div><div class="delete hidden">Delete</div></div>');
                 };
                 selectedStudentIdArray.indexOf(child.id) != -1 ? append('icon-red') : append('icon-grey');
             });
@@ -393,7 +398,7 @@ define([
                     var str = $("#searchTxt").val().toLowerCase();
                     $("#searchTxt").val(str.substring(0, str.length));
                     doSearch();
-                break;
+                    break;
                 case 9: // Tab
                 case 13: // Enter
                 case 37: // Left
@@ -401,19 +406,19 @@ define([
                 case 39: // Right
                 case 40: // Down
                     doSearch();
-                break;
+                    break;
                 default:
                     doSearch();
             } //eo switch
         }); //eo searchTxt keyup
-        $("#searchBtn").on('click', function() {    doSearch();    }); //searchBtn click
+        $("#searchBtn").on('click', function() { doSearch(); }); //searchBtn click
     }; //eo initSearch
     var initDoneBtn = function() {
         $("#doneBtn").on("click", function(e) {
             var hasSelected = function() {
                 var studentId = $(this).parent().attr("id");
                 var defer = _confirm("Do you want to delete these students?");
-                defer.done(function(){
+                defer.done(function() {
                     //Delete selected students
                     var selectedStudentIdArrayCopy = selectedStudentIdArray.slice();
                     $.each(selectedStudentIdArrayCopy, function(i, studentId) {
@@ -428,14 +433,14 @@ define([
     var addedToDOM = function() {
         initData();
         loadStudents()
-        .then(function() {
-            $(".upper-area").removeClass("hidden");
-            $(".lower-area").removeClass("hidden");
-            initEvents();
-            initSearch();
-            initButtons();
-            initDoneBtn();
-        });
+            .then(function() {
+                $(".upper-area").removeClass("hidden");
+                $(".lower-area").removeClass("hidden");
+                initEvents();
+                initSearch();
+                initButtons();
+                initDoneBtn();
+            });
 
     }; //eo addedToDOM
 

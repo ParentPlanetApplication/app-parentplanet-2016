@@ -233,10 +233,12 @@ define([
                     title: ''
                 };
             }; //eo isCanceled
-
+       
             user = _getUserData(); //get user from local storage
+       
             $("#calendar-content").empty();
             elTemplate = handlebars.compile(elTemplate); //now is a function
+            var allEvent = "";
             for (i = 0; i < events.length; i++) {
                 event = events[i];
                 //Filter unwanted activities (activites equal to organizationGroup, said Michael in July-August)
@@ -244,6 +246,7 @@ define([
                 if (_unselectedActivityIdList.indexOf(event.orgIdForThisObject) == -1) {
                     cls = false; //add a 'first' class to the item if it immediately follows a date title
                     if (eventIdList.indexOf(event.objectId) != -1) {
+       
                         //Check date for displaying appropriated title
                         if (typeof event.startDateTime === 'string') { //updated events
                             date = moment(event.startDateTime).calendar();
@@ -252,10 +255,11 @@ define([
                             date = moment(event.startDateTime.iso).calendar();
                             date0 = moment(event.startDateTime.iso);
                         }
+       
                         if (dateIndex.indexOf(date) == -1) {
                             dateIndex.push(date);
                             dateArrayForCalendarWidget.push(date0.format("MM/DD/YY"));
-                            $("#calendar-content").append('<div class="content-title">' + date + '</div>');
+                            allEvent += ('<div class="content-title">' + date + '</div>');
                             cls = true; //OK, now be sure to add the .first so we can do custom css
                         }
                         isAllDay = event.isAllDay;
@@ -291,19 +295,25 @@ define([
                             eventTitle: event.title,
                             time: time
                         }; // data that is injected into function el
-                        // el = '<div class=' + cls + ' type="calendar" uid="' + event.objectId + '" isRead="' + isRead + '" grp="' + grp +   '" clr="' + clr + '">';
-                        // el += '<div class="text-wrapper">' + _getOrgIcon(event.groupType, color) + ' ' + prefix.title + event.title + '</div><div class="time-info">' + time + '</div>' + '</div>';
+       
+                         el = '<div class=' + cls + ' type="calendar" uid="' + event.objectId + '" isRead="' + isRead + '" grp="' + grp +   '" clr="' + clr + '">';
+                         el += '<div class="text-wrapper">' + _getOrgIcon(event.groupType, color) + ' ' + prefix.title + event.title + '</div><div class="time-info">' + time + '</div>' + '</div>';
                         el = elTemplate(context);
                         //el = $(el);
-                        $("#homebottom > #calendar-content").append(el);
+                        //$("#homebottom > #calendar-content").append(el);
+                        allEvent += el;
                     }
                     cls = false; //always reset no matter what
                     contentCount++;
                 }
             } //eo for events.length
+            $("#homebottom > #calendar-content").append(allEvent);
             if (contentCount == 0) {
                 $("#calendar-content").html('<div style="text-align:center;">You have no upcoming events</div>');
             }
+       
+       
+       
             //Create solid lines, dashed in css
             $(".content-title").each(function() {
                 $(this).prev().css("border-bottom", "solid 1px #ccc");
@@ -420,22 +430,6 @@ define([
 
         initSplitPaneBar();
         //Reset variable
-
-        if (!fetching) {
-            children = {
-                id: [],
-                color: []
-            };
-            _loadChildrenColors(function() { //update notiBadge do not check here, only when a push comes in do we increment
-                _checkUnreadMessages(Parse);
-                _checkUnreadEvent(Parse);
-                _checkUnreadHomework(Parse);
-                loadMesssageRelations();
-                loadEventRelations();
-
-                overlay ? overlay.hide() : $.noop();
-            }, children);
-        }
 
         //Init events
         $("#createBtn").on('click', function() {

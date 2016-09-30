@@ -39,11 +39,13 @@ var _setSignOut = function(Chaplin) {
 
 var _checkSignedIn = function(Chaplin) {
     var flag = _getSignedIn();
-    var ignore = ['user-signup', 'signup-enter-kid-info-view'];
+    var ignore = ['user-signup', 'signup-enter-kid-info-view', 'user-signin'];
 
     function cancelSignIn() {
         _setSignOut(Chaplin);
     };
+    //console.log(_currentViewId());
+
     if ($.inArray(_currentViewId(), ignore) < 0) { //if a view is in the array then skip check of whether user is signed in; i.e. creating a new account
         flag ? cancelSignIn() : Chaplin.utils.redirectTo({
             name: 'signin'
@@ -533,6 +535,7 @@ var _setHomeworkLocalNotification = function(_homework, isSecondReminder) {
 
 var _setEventLocalNotification = function(event) {
     var internalProcess = function(isSecondReminder, _event) {
+
         var minutes = -1;
         var date, message = '';
         var startDateTime = _event.get('startDateTime');
@@ -685,6 +688,146 @@ var _clearAllLocalNotifications = function() {
         console.log("Cancelled all notifications");
     });
 }
+
+
+var _syncEventLocalNotifications = function(events) {
+    _clearAllLocalNotifications();
+
+    var localItems = [];
+    var bulidParams = function(events) {
+        var params = [];
+
+        var internalProcess = function(isSecondReminder, _event) {
+            var minutes = -1;
+            var message = '';
+            var startDateTime = _event.get('startDateTime');
+            var when = moment(new Date(startDateTime)).format('dddd MM/DD/YY h:mma');
+            var cancel = false;
+            var which = isSecondReminder ? _event.get('reminder2') : _event.get('reminder');
+            var title = _event.get('title');
+            var location = _event.get('location');
+            var objectId = _event.id;
+            var id = isSecondReminder ? objectId + '_r2' : objectId; //remember about the calendar view setting, has to be the same as there
+            id = _hashCode(id); //new notifications api uses numbers//.toString();//new notifications api uses numbers
+            var o = null;
+            var json = null;
+
+            var handleReminder = function() {
+                var date = moment(new Date(startDateTime)).subtract(minutes, 'minutes').toDate();
+
+                // Don't notify event in the past.
+                if (date <= new Date()) {
+                    return;
+                }
+
+
+                json = JSON.stringify({
+                    objectId: objectId,
+                    minutes: minutes
+                }); //data to add to the reminder
+
+
+
+                message = title + ' on ' + when;
+                message = location && location.length > 0 ? message + ' @ ' + location : message;
+                o = {
+                    id: id,
+                    every: '0',
+                    at: date,
+                    title: 'ParentPlanet Reminder',
+                    text: message,
+                    data: json
+                };
+
+                params.push(o);
+
+                var _o = {
+                    id: o.id,
+                    objectId: objectId,
+                    minutes: minutes,
+                    startDate: startDateTime,
+                    date: date,
+                    message: message
+                }
+
+                localItems.push(_o);
+            }; //eo handleReminder
+            //switch on the string being passed in and get the number of minutes from it
+            switch (which) {
+                case 'Never':
+                    minutes = -1;
+                    break;
+                case 'At Time of Event':
+                    minutes = 1;
+                    break;
+                case '5 Minutes Before':
+                    minutes = 5;
+                    break;
+                case '10 Minutes Before':
+                    minutes = 10;
+                    break;
+                case '15 Minutes Before':
+                    minutes = 15;
+                    break;
+                case '30 Minutes Before':
+                    minutes = 30;
+                    break;
+                case '1 Hour Before':
+                    minutes = 60;
+                    break;
+                case '2 Hours Before':
+                    minutes = 120;
+                    break;
+                case '4 Hours Before':
+                    minutes = 60 * 4;
+                    break;
+                case '1 Day Before':
+                    minutes = 60 * 24;
+                    break;
+                case '2 Days Before':
+                    minutes = 60 * 24 * 2;
+                    break;
+                case '1 Week Before':
+                    minutes = 60 * 24 * 7;
+                    break;
+                default:
+                    minutes = -1;
+                    break;
+            } //eo switch over which repeat period selected
+
+            if (minutes >= 0) {
+                handleReminder();
+            }
+        }
+
+        events.forEach(function(event) {
+            event.get('reminder') ? internalProcess(false, event) : $.noop();
+            event.get('reminder2') ? internalProcess(true, event) : $.noop();
+        });
+
+        return params;
+    }
+
+    function schedule(notifParams) {
+        window.plugin.notification.local.hasPermission(function(granted) { //check if we have permission to send
+            if (granted) { //ok have permission to send a localnotification, now check what action to take: cancel or send
+                window.plugin.notification.local.schedule(notifParams);
+            } else { //no permission, ask once
+                window.plugin.notification.local.registerPermission(function(granted) { //ok, have permission, now check
+                    if (granted) {
+                        window.plugin.notification.local.schedule(notifParams);
+                    }
+                }); //eo registerPermission
+            } //eo granted permission to send
+        }); //eo hasPermission
+    }
+
+    var eventsToRegister = events.filter(function(e) { return e.get('reminder') || e.get('reminder2'); })
+    var notifParams = bulidParams(eventsToRegister);
+    schedule(notifParams);
+    _setUserReminders(localItems);
+
+}; //eo _setEventLocalNotification
 
 var _getParentEmailGivenAccessUserEmail = function(email) {
     var Parse = _parse;
@@ -1140,42 +1283,48 @@ var _checkTimeWindow = function(interval) { //interval in minutes
  * View Management
  */
 var _goToSettingPage = function(_Chaplin) { //backBtn handler
-    console.log(_view);
-    _Chaplin.utils.redirectTo({
-        name: 'setting-home'
-    });
-    //  switch ( _view.previousView ) {
-    // 	case _view.HOME:
-    // 		_Chaplin.utils.redirectTo( {
-    // 			name: 'setting-home'
-    // 		} );
-    // 		break;
-    // 	case _view.SCHEDULE_INDEX:
-    // 		_Chaplin.utils.redirectTo( {
-    // 			name: 'calendar'
-    // 		} );
-    // 		break;
-    // 	case _view.MESSAGES_INDEX:
-    // 		_Chaplin.utils.redirectTo( {
-    // 			name: 'message'
-    // 		} );
-    // 		break;
-    // 	case _view.HOMEWORK_INDEX:
-    // 		_Chaplin.utils.redirectTo( {
-    // 			name: 'homework'
-    // 		} );
-    // 		break;
-    // 	case _view.CONTACTS_INDEX:
-    // 		_Chaplin.utils.redirectTo( {
-    // 			name: 'contacts'
-    // 		} );
-    // 		break;
-    // 	default:
-    // 		_Chaplin.utils.redirectTo( {
-    // 			name: 'home'
-    // 		} );
-    // 		break;
-    // 	} //eo switch
+    switch (_view.currentView) {
+        case _view.USER_SIGNIN:
+            _Chaplin.utils.redirectTo({
+                name: 'signin'
+            });
+            break;
+        case _view.USER_SIGNUP:
+            _Chaplin.utils.redirectTo({
+                name: 'signup'
+            });
+            break;
+        case _view.HOME:
+            _Chaplin.utils.redirectTo({
+                name: 'setting-home'
+            });
+            break;
+        case _view.SCHEDULE_INDEX:
+            _Chaplin.utils.redirectTo({
+                name: 'calendar'
+            });
+            break;
+        case _view.MESSAGES_INDEX:
+            _Chaplin.utils.redirectTo({
+                name: 'message'
+            });
+            break;
+        case _view.HOMEWORK_INDEX:
+            _Chaplin.utils.redirectTo({
+                name: 'homework'
+            });
+            break;
+        case _view.CONTACTS_INDEX:
+            _Chaplin.utils.redirectTo({
+                name: 'contacts'
+            });
+            break;
+        default:
+            _Chaplin.utils.redirectTo({
+                name: 'home'
+            });
+            break;
+    } //eo switch
 }; //eo goToSettingPage
 
 var _setPreviousView = function() {
@@ -2201,6 +2350,17 @@ var _showColorPicker = function(parent, target) {
     });
 
     $("#color-picker").css("display", "block");
+
+    // show pp
+    var pTop = $("#main-content-inner").position().top;
+    if (pTop < 0) {
+        var h = $("#color-picker").height();
+        var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        var top = ((height / 2) - (h / 2)) + dualScreenTop;
+
+        $('#color-picker').offset({ top: top });
+    }
 
     $(".cp-bg").on("click", function(e) {
         $("#color-picker").remove();
@@ -3431,7 +3591,9 @@ var _isRepeat = function(repeatString) {
  * add parent and secondary parents email to UserCustomList table in the userContactEmail array
  * parentId: Parent's id of the child.
  */
-var _addParentEmail = function(parentId, selectedOrgGroupId) {
+var _addParentEmail = function(parentIds, selectedOrgGroupId) {
+    parentIds = Array.isArray(parentIds) ? parentIds : [parentIds];
+
     var Parse = _parse;
     var deferred = $.Deferred();
     var UserAcctAccess = Parse.Object.extend("UserAcctAccess", {}, {
@@ -3440,93 +3602,85 @@ var _addParentEmail = function(parentId, selectedOrgGroupId) {
         }
     });
     var query = UserAcctAccess.query();
-    query.equalTo("parentId", parentId);
+    query.containedIn("parentId", parentIds);
     query.find({
         success: function(results) {
             return results;
         },
         error: function(error) {
-            return error;
+            deferred.reject(error);
         }
     }).then(function(results) {
-        if (results.lenght === 0) return;
+        var accessDeferred = $.Deferred();
+
+        var uList = [];
+        var givenAccessUserIds = parentIds.slice();
+
+        results.forEach(function(value) {
+            givenAccessUserIds.push(value.get('givenAccessUserId'));
+        });
 
         var user = JSON.parse(localStorage.getItem("user"));
-        //var selectedOrgGroupId = user.setting.selectedOrgGroupId;
         var User = Parse.Object.extend("User", {}, {
             query: function() {
                 return new Parse.Query(this.className);
             }
         });
         var query = User.query();
-        var uList = [];
-        var givenAccessUserId = [parentId];
-
-        _.each(results, function(value) {
-            givenAccessUserId.push(value.attributes.givenAccessUserId);
-        });
-
-
-        var accessDeferred = $.Deferred();
         //Get Email list from User table base on isEmailDelivery is true
-        query.containedIn("objectId", givenAccessUserId);
+        query.containedIn("objectId", givenAccessUserIds);
         query.find({
             success: function(results) {
-                if (results.length) {
-                    uList = _.filter(results, function(user) {
+                if (results.length > 0) {
+                    var allUsers = _.filter(results, function(user) {
                         return !!user.get("isEmailDelivery");
                     });
 
-                    accessDeferred.resolve(uList);
-                    //return uList;
+                    var UserCustomList = Parse.Object.extend("UserCustomList", {}, {
+                        query: function() {
+                            return new Parse.Query(this.className);
+                        }
+                    });
+                    var query = UserCustomList.query();
+                    query.equalTo("groupId", selectedOrgGroupId);
+                    query.find({
+                        success: function(results) {
+                            for (var i = 0; i < results.length; i++) {
+                                var customGroup = results[i];
+
+                                //Add email to userContactEmail
+                                for (var j = 0; j < allUsers.length; j++) {
+                                    customGroup.addUnique("userContactEmail", allUsers[j].attributes.email);
+                                }
+                            }
+
+                            Parse.Object.saveAll(results, {
+                                success: function(d) {
+                                    console.log('save custom list successful');
+                                    var emailList = [];
+                                    for (var index = 0; index < allUsers.length; index++) {
+                                        emailList.push(allUsers[index].attributes.email);
+                                    }
+                                    _emailList = emailList;
+                                    deferred.resolve(emailList);
+                                },
+                                error: function(err) {
+                                    deferred.reject(err);
+                                    _alert('Internal Error: Error while saving UserCustomList:' + err);
+                                }
+                            });
+                        },
+                        error: function(err) {
+                            deferred.reject(err);
+                            _alert('Internal Error: Error while querying UserCustomList:' + err);
+                        }
+                    });
                 }
             },
-            error: function(error) {
-                return uList;
+            error: function(err) {
+                deferred.reject(err);
             }
-        }).then(function(results) {
-
-            accessDeferred.done(function() {
-                if (results.lenght === 0) return;
-
-                var UserCustomList = Parse.Object.extend("UserCustomList", {}, {
-                    query: function() {
-                        return new Parse.Query(this.className);
-                    }
-                });
-                var query = UserCustomList.query();
-                var userAcctAccessList = results;
-                var userAcctAccessListLength = userAcctAccessList.length;
-
-                query.equalTo("groupId", selectedOrgGroupId);
-                query.find({
-                    success: function(results) {
-                        for (var i = 0; i < results.length; i++) {
-                            var customGroup = results[i];
-                            var j = 0;
-
-                            //Add email to userContactEmail
-                            for (j = 0; j < userAcctAccessListLength; j++) {
-                                customGroup.addUnique("userContactEmail", userAcctAccessList[j].attributes.email);
-                            }
-                            customGroup.save();
-                        }
-                        console.log('save custom list successful');
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-
-                var emailList = [];
-                for (var index = 0; index < userAcctAccessListLength; index++) {
-                    emailList.push(userAcctAccessList[index].attributes.email);
-                }
-                _emailList = emailList;
-                deferred.resolve(emailList);
-            });
-
-        });
+        })
     });
 
     return deferred;
@@ -4025,7 +4179,7 @@ function _createNativeEvent(event, calendarToSync) { //these are js Date objects
     var successAddCalendar = function(message) {
         deferred.resolve();
     };
-    
+
     function getIdText(eventId) {
         return "ID#" + eventId;
     }

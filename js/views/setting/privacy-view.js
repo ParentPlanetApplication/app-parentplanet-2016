@@ -8,8 +8,7 @@ define([
     'use strict';
 
     var addedToDOM = function() {
-      $("#backBtn").on('click', function(e) {
-        console.log(_view.previousView);
+        $("#backBtn").on('click', function (e) {
         _goToSettingPage(Chaplin);
       });
     }; //eo addedToDOM

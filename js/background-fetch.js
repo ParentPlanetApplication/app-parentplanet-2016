@@ -80,6 +80,7 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
     }; //eo isUserAssociate
     //Simply copy the code from signin-view.js
     var getUserEventRelations = function() {
+        //console.log('Start getUserEventRelations: ' + new Date());
         var user = Parse.User.current();
         var userEventRelations = _getUserEventRelations(); //keep user's data if parentId != user.id (user account access)
         var UserEventRelation = Parse.Object.extend("UserEventRelation", {}, {
@@ -106,18 +107,19 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
                     var allEventRelations = [];
                     //Collect all event ids
                     $.each(eventRelations, function(i, eventRelation) {
-                        var childIdList = eventRelation.get("childIdList");
+                        var eventRelationAtt = eventRelation.attributes;
+                        var childIdList = eventRelationAtt.childIdList;
                         if (!childIdList) {
                             //do nothing
-                        } else if (childIdList.length == 0 && eventRelation.get("parentId") != user.id) {
+                        } else if (childIdList.length == 0 && eventRelationAtt.parentId != user.id) {
                             //do nothing
-                        } else if (childIdList.length == 1 && _unselectedKidIdList.indexOf(childIdList[0]) != -1) {} else if (eventIdList.indexOf(eventRelation.get("eventId")) == -1) {
-                            eventIdList.push(eventRelation.get("eventId"));
-                            eventIsRead.push(eventRelation.get("isRead"));
-                            eventChildIdList.push(eventRelation.get("childIdList"));
-                            if (eventRelation.get("parentId") != user.id) { //check if should be replaced with localStorage data to keep user's individual isRead setting
+                        } else if (childIdList.length == 1 && _unselectedKidIdList.indexOf(childIdList[0]) != -1) {} else if (eventIdList.indexOf(eventRelationAtt.eventId) == -1) {
+                            eventIdList.push(eventRelationAtt.eventId);
+                            eventIsRead.push(eventRelationAtt.isRead);
+                            eventChildIdList.push(eventRelationAtt.childIdList);
+                            if (eventRelationAtt.parentId != user.id) { //check if should be replaced with localStorage data to keep user's individual isRead setting
                                 temp = $.grep(userEventRelations, function(n) {
-                                    return (n.eventId == eventRelation.get("eventId") && n.isUpdated == eventRelation.get("isUpdated"));
+                                    return (n.eventId == eventRelationAtt.eventId && n.isUpdated == eventRelationAtt.isUpdated);
                                 });
                                 var pushRelation = temp.length > 0 ? temp[0] : eventRelation;
                                 allEventRelations.push(pushRelation);
@@ -126,10 +128,10 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
                             }
                         }
                     });
+                    //console.log('End getUserEventRelations: ' + new Date());
                     getUserEvents(eventIdList, eventIsRead, eventChildIdList); //Get latest events
                     _setUserEventRelations(allEventRelations);
                 }; //eo hasResults
-                //_setUserEventRelations(eventRelations);
                 eventRelations.length === 0 ? deferred.resolve() : hasResults(); //go on to the next step: getUserHomeworkRelations
             }, //eo success
             error: function(error) { deferred.resolve(); } //go to the next step
@@ -137,6 +139,7 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
         return deferred.promise();
     }; //eo getUserEventRelations
     var getUserEvents = function(eventIdList, eventIsRead, eventChildIdList) {
+        //console.log('Start getUserEvent: ' + new Date());
         var user = Parse.User.current();
         var Event = Parse.Object.extend("Event", {}, {
             query: function() {
@@ -152,22 +155,34 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
         query.greaterThanOrEqualTo("startDateTime", today);
         query.find({
             success: function(results) {
+                //console.log('In getUserEvent: got result' + new Date());
                 var eventRelations = _getUserEventRelations();
                 var matchingEventRelations = [];
                 var temp = [];
                 var senderIdList = [];
                 events = results; //keep a ref. for use elsewhere (getLocalNotifications)
+                
+                var localEvents = _getUserEvents();
+                //console.log('In getUserEvent: count result ' + events.length);
                 $.each(events, function(i, event) {
-                    var localEvent = _getUserEventsItem(event.id);
+                    var eventAtt = event.attributes;
+                    
+                    var localEvent = localEvents.find(function(e) {
+                        e.objectId == event.id;
+                    });
+                    
+                    //var localEvent = _getUserEventsItem(event.id);
                     var checkReminder = function() {
-                        if (localEvent.reminder != event.get("reminder")) {
+                        if (localEvent.reminder != eventAtt.reminder) {
                             event.set("reminder", localEvent.reminder);
                         }
-                        if (localEvent.reminder2 != event.get("reminder2")) {
+                        if (localEvent.reminder2 != eventAtt.reminder2) {
                             event.set("reminder2", localEvent.reminder2);
                         }
                     }; //eo checkReminder
+                    
                     localEvent ? checkReminder() : $.noop;
+                    
                     temp = $.grep(eventRelations, function(eventRelation, j) {
                         var flag = eventRelation.eventId === event.id ? true : false;
                         if (flag) {
@@ -178,9 +193,12 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
                         return flag;
                     });
                     matchingEventRelations = matchingEventRelations.concat(temp);
-                    senderIdList.indexOf(event.get("senderId")) === -1 ? senderIdList.push(event.get("senderId")) : $.noop();
+                    
+                    senderIdList.indexOf(eventAtt.senderId) === -1 ? senderIdList.push(eventAtt.senderId) : $.noop();
+                    
                 });
-                console.log('background-fetch.getUserEvents._autoSyncWithCalendar');
+                //console.log('End getUserEvent: got result' + new Date());
+                //console.log('background-fetch.getUserEvents._autoSyncWithCalendar');
                 if (!_BackgroundFetching) {
                     _BackgroundFetching = true;
                     _autoSyncWithCalendar() //handle sync using promises
@@ -190,6 +208,7 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
                 _setUserEvents(events);
                 _setUserEventRelations(matchingEventRelations);
                 getUserEventSenderList(senderIdList);
+
             }, //eo success query find
             error: function(error) { deferred.resolve(); } //go to the next step
         });
@@ -500,13 +519,8 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
         var setUserReminders = function() {
             //when events come in from Parse set the local notification for reminders
 
-            _clearAllLocalNotifications();
-
-            //events are set in getUserEvents
-            $.each(events, function(i, _event) {
-                _setEventLocalNotification(_event);
-            }); //eo .each events
-
+            _syncEventLocalNotifications(events);
+            
             deferred.resolve();
         }; //eo setUserReminders
         deferred = $.Deferred(); //scope is global to background-fetch and everything else #5 :)

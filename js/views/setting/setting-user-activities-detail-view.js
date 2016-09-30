@@ -84,6 +84,8 @@ define([
                         $("#main-content").append(html);
                         $("#calendarAustoSyncBtn").prop('checked', watchingGroup.isWatching ? "checked" : "");
                         $("#alertsBtn").prop('checked', relation.get("alert") ? "checked" : "");
+                        $('#calendarToSync').text(watchingGroup.calendarToSync ? watchingGroup.calendarToSync : 'None');
+
                         //UI handlers
                         $("#calendarAustoSyncBtn").on('click', function() {
                             var isChecked = $("#calendarAustoSyncBtn").prop('checked');

@@ -247,9 +247,15 @@ i[class*=" p2-"] {
   content: "O";
   height: inherit;
 }
-.p2-fieldtrip:before, .p2-icon-42:before {
+.p2-icon-42:before {
   content: "P";
   height: inherit;
+}
+.p2-fieldtrip {
+  height:20px;
+  width:20px;
+  background: url(../img/runner.png) no-repeat;
+  background-size: 100%;
 }
 .p2-football:before, .p2-icon-43:before {
   content: "Q";

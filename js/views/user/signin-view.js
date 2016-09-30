@@ -8,20 +8,21 @@ define(
         'gumby',
         'checkbox',
         'parse',
-        'spinner'
+        'spinner',
+        'backbone.touch'
     ],
-    function(Chaplin, View, Template, $, ParseProxy, Gumby, checkbox, Parse, spinner) {
-        'use strict';
-        //top level scope
-        var proxy = ParseProxy;
-        var isEventLoaded;
-        var isMessagesLoaded;
-        var isHomeworkLoaded;
-        var isContactsLoaded;
-        var isUserCustomListLoaded;
-        var isActivitiesLoaded;
-        var isMobile;
-        // var spinner = null;
+	function (Chaplin, View, Template, $, ParseProxy, Gumby, checkbox, Parse, spinner, touch) {
+		'use strict';
+		//top level scope
+		var proxy = ParseProxy;
+		var isEventLoaded;
+		var isMessagesLoaded;
+		var isHomeworkLoaded;
+		var isContactsLoaded;
+		var isUserCustomListLoaded;
+		var isActivitiesLoaded;
+		var isMobile;
+		// var spinner = null;
 
         var redirectToHome = function() {
             //Redirect user to home
@@ -357,73 +358,84 @@ define(
                     deferred ? deferred.resolve() : $.noop();
                 }; //eo signinError
 
-                function noSignin() {
-                    overlay ? overlay.hide() : $.noop();
-                    deferred.resolve();
-                    _alert("Please enter both a username and a password to sign in.");
-                }; //eo noSignin
-                function hasSignin() {
-                    $("#loginBtn").addClass("login-active");
-                    saveCheckBox(); //Save checkbox
-                    overlay ? overlay.show() : $.noop();
-                    timeout = setTimeout(function() {
-                        overlay ? overlay.hide() : $.noop();
-                        _alert("Could not connect to server, please try again later.");
-                    }, 30000);
-                    ParseProxy.user.signin(username, password, signinSuccess, signinError); //eo ParseProxy signin
-                }; //eo hasSignin
-                if (timeout) {
-                    return;
-                } //debounce multiple clicks on the login button
-                //spinner = _createSpinner('spinner');
-                //spinner.show();
-                deferred = $.Deferred();
-                username.length > 0 && password.length > 0 ? hasSignin() : noSignin();
-            }; //eo loginClick
-            // Init The First Push Notification
-            var initButtons = function() {
-                //Init event handling from UI
-                $('.remember-me > .checkbox > ul').on('click', function(e) {
-                    setTimeout(function() {
-                        saveCheckBox();
-                    }, 500); //Gumby takes some time to render checkbox
-                }); //eo remember-me
-                $("#signupBtn").on('click', signupClick); //eo signupBtn click
-                $("#resetpwdBtn").on('click', resetClick); //eo resetpwdBtn
-                $("#loginBtn").on('click', loginClick); //eo loginBtn click
-            }; //eo initButtons
-            var initNetwork = function() {
-                function noNetwork() {
-                    $('.p2').removeClass('p2');
-                    $('#connectivity-row').show();
-                };
-                _hasNetworkConnection === false ? noNetwork() : $.noop();
-            };
-            user = _getUserData() || {}; //1. Get user information
-            initCheckboxes(user);
-            initIsRemember(user);
-            _setUserData(user); //save setup
-            /* MAIN ACTION IS HERE, WHEN THE USER CLICKS THE LOGIN BUTTON */
-            initButtons();
-            initNetwork(); //check if we are online
-            /* ---------------------------------------------------------- */
-        }; //eo addedToDOM
-        var __id = 'user-signin';
-        var View = View.extend({
-            template: Template,
-            autoRender: true,
-            keepElement: false,
-            id: __id,
-            listen: {
-                addedToDOM: addedToDOM
-            },
-            initialize: function(options) {
-                _setCurrentView(_view.USER_SIGNIN, __id);
-                isMobile = _isMobile(); //are we on the mobile platform
-                // console.log('signin-view initialize--isMobile: ' + isMobile);
-                Chaplin.View.prototype.initialize.call(this, arguments);
-            }
-        }); //eo View.extend
+				function noSignin() {
+					overlay ? overlay.hide() : $.noop();
+					deferred.resolve();
+					_alert( "Please enter both a username and a password to sign in." );
+				}; //eo noSignin
+				function hasSignin() {
+					$( "#loginBtn" ).addClass( "login-active" );
+					saveCheckBox(); //Save checkbox
+					overlay ? overlay.show() : $.noop();
+					timeout = setTimeout( function () {
+						overlay ? overlay.hide() : $.noop();
+						_alert( "Could not connect to server, please try again later." );
+					}, 30000 );
+					ParseProxy.user.signin( username, password, signinSuccess, signinError ); //eo ParseProxy signin
+				}; //eo hasSignin
+				if ( timeout ) {
+					return;
+				} //debounce multiple clicks on the login button
+				//spinner = _createSpinner('spinner');
+				//spinner.show();
+				deferred = $.Deferred();
+				username.length > 0 && password.length > 0 ? hasSignin() : noSignin();
+			}; //eo loginClick
+			// Init The First Push Notification
+			var initButtons = function () {
+				//Init event handling from UI
+				$( '.remember-me > .checkbox > ul' ).on( 'click', function ( e ) {
+					setTimeout( function () {
+						saveCheckBox();
+					}, 500 ); //Gumby takes some time to render checkbox
+				} ); //eo remember-me
+				$( "#signupBtn" ).on( 'click', signupClick ); //eo signupBtn click
+				$( "#resetpwdBtn" ).on( 'click', resetClick ); //eo resetpwdBtn
+				$( "#loginBtn" ).on( 'click', loginClick ); //eo loginBtn click
+			}; //eo initButtons
+			var initNetwork = function () {
+				function noNetwork() {
+					$( '.p2' ).removeClass( 'p2' );
+					$( '#connectivity-row' ).show();
+				};
+				_hasNetworkConnection === false ? noNetwork() : $.noop();
+			};
+			user = _getUserData() || {}; //1. Get user information
+			initCheckboxes( user );
+			initIsRemember( user );
+			_setUserData( user ); //save setup
+			/* MAIN ACTION IS HERE, WHEN THE USER CLICKS THE LOGIN BUTTON */
+			initButtons();
+			initNetwork(); //check if we are online
+		    /* ---------------------------------------------------------- */
+
+			touch.$("#terms").on('click', function (e) {
+			    Chaplin.utils.redirectTo({
+			        name: 'tos'
+			    });
+			});
+			touch.$("#privacy").on('click', function (e) {
+			    Chaplin.utils.redirectTo({
+			        name: 'privacy'
+			    });
+			});
+		}; //eo addedToDOM
+		var __id = 'user-signin';
+		var View = View.extend( {
+			template: Template,
+			autoRender: true,
+			keepElement: false,
+			id: __id,
+			listen: {
+				addedToDOM: addedToDOM
+			},
+			initialize: function ( options ) {
+				_setCurrentView( _view.USER_SIGNIN, __id );
+				isMobile = _isMobile(); //are we on the mobile platform
+				// console.log('signin-view initialize--isMobile: ' + isMobile);
+				Chaplin.View.prototype.initialize.call( this, arguments );
+			}
+		} ); //eo View.extend
 
         return View;
     });
