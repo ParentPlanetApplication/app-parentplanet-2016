@@ -1,0 +1,4 @@
+language: javascript
+
+before_script:
+  - which seq
