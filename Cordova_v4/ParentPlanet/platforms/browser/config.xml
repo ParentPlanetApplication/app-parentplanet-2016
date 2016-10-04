@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.ppllc.p2" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Camera">
+        <param name="browser-package" value="Camera" />
+    </feature>
+    <feature name="Badge">
+        <param name="browser-package" value="Badge" />
+    </feature>
+    <feature name="Device">
+        <param name="browser-package" value="Device" />
+    </feature>
+    <name>ParentPlanet</name>
+    <description>
+        Mobile and Web App for Parents, Schools and Activity Groups.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
+    <hook src="scripts/appAfterBuild.js" type="after_build" />
+    <preference name="ShowSplashScreen" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+</widget>

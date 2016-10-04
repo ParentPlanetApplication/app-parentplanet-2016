@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.ppllc.p2" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>ParentPlanet</name>
+    <description>
+        Mobile and Web App for Parents, Schools and Activity Groups.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Apache Cordova Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
+
+    <hook type="after_build" src="scripts/appAfterBuild.js" />
+
+    <platform name="ios">
+        <!--
+         Add by phuongngo phuongnh@vinasource.com
+         StatusBarStyle: default -> disable status bar have text with white color -> will show with black color
+         enable call phone, send sms, email with allow-intent tag
+         -->
+
+        <preference name="StatusBarStyle" value="default" />
+
+        <access origin="mailto:*" launch-external="yes"/>
+        <access origin="sms:*" launch-external="yes"/>
+
+        <allow-intent href="tel:*"/>
+        <allow-intent href="mailto:*"/>
+        <allow-intent href="sms:*"/>
+        <!--
+         Add by phuongnh@vinasource.com
+         Disable webview will bound when touch and drap on screen
+         -->
+        <preference name="webviewbounce" value="false" />
+        <preference name="DisallowOverscroll" value="true" />
+
+        <feature name="InAppBrowser">
+          <param name="ios-package" value="CDVInAppBrowser" />
+        </feature>
+
+        <allow-navigation href="http://*/*" />
+        <allow-navigation href="https://*/*" />
+        <allow-navigation href="data:*" />
+    </platform>
+	<platform name="browser">
+		<preference name="ShowSplashScreen" value="false" /> <!-- defaults to "true" -->
+		<preference name="ShowSplashScreenSpinner" value="false"/>
+	</platform>
+	<platform name="android">
+		<icon src="icon.png" />
+		<icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
+		<icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
+		<icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
+		<icon density="xhdpi" src="www/res/icon/android/drawable-xhdpi-icon.png" />
+		<icon density="xxhdpi" src="www/res/icon/android/drawable-xxhdpi-icon.png" />
+		<icon density="xxxhdpi" src="www/res/icon/android/drawable-xxxhdpi-icon.png" />
+
+		<access origin="mailto:*" launch-external="yes"/>
+        <access origin="sms:*" launch-external="yes"/>
+
+        <allow-intent href="tel:*"/>
+        <allow-intent href="mailto:*"/>
+        <allow-intent href="sms:*"/>
+
+		<allow-navigation href="http://*/*" />
+        <allow-navigation href="https://*/*" />
+        <allow-navigation href="data:*" />
+	</platform>
+</widget>

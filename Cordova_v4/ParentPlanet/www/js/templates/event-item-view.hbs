@@ -1,0 +1,14 @@
+{{#if header}}
+	  <div class="centered ten columns">
+	    {{header}}
+	  </div>
+{{else}}
+	<a href="/#event/{{uid.value}}">
+  <div class="one columns">
+	  <span class="event-icon {{testcolor}}"><i class="p2-{{klass}}"></i></span>
+	</div>
+	<div class="nine columns truncate">{{summary.value}}</div>
+	<div class="two columns datetime">{{dtstart.params.time}}</div>
+	</a>
+{{/if}}
+ 

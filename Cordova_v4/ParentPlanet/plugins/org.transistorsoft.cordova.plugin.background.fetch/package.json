@@ -1,0 +1,21 @@
+{
+  "name": "cordova-plugin-background-fetch",
+  "version": "2.0.6",
+  "cordova": {
+    "id": "cordova-plugin-background-fetch",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christocracy/cordova-plugin-background-fetch.git"
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "Chris Scott"
+}

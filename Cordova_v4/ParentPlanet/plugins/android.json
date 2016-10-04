@@ -1,0 +1,25 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-badge": {
+            "PACKAGE_NAME": "com.ppllc.p2"
+        },
+        "de.appplant.cordova.plugin.local-notification": {
+            "PACKAGE_NAME": "com.ppllc.p2"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-app-event": {
+            "PACKAGE_NAME": "com.ppllc.p2"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ppllc.p2"
+        }
+    }
+}

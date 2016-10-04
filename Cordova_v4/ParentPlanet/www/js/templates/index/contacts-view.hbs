@@ -1,0 +1,28 @@
+<div class="navbar">
+    <div class="mid-menu">
+        <div id="filter" class="menu" unselectable="on">Filter</div>
+        <div id="search" class="menu" unselectable="on">Search</div>
+    </div>
+    <div id="settingBtn" class="left-menu">
+        <i class="icon-fontello-cog"></i>
+    </div>
+    <div id="createBtn" class="right-menu">
+        <i class="icon-fontello-plus"></i>
+    </div>
+</div>
+<div class="innerview-container">
+    <div id="contacts-bar" class="title-bar"><div class="icon-wrapper" style="top: 5px; font-size: 24px;"><i class="p2-contact"></i></div>Contacts</div>
+    <div id="contacts-content" class="content-wrapper">
+        {{#if hasContacts}}
+            <!--
+            <div id="all-contacts" class="content-item contact" data-index="999">All Contacts</div>
+            -->
+            {{#each organizations}}
+            <div id="{{objectId}}" class="content-item contact" data-index="{{i}}">{{name}}</div>
+            {{/each}}
+        {{else}}
+            <div style="text-align:center; padding:0 10px;">You have no groups for contact information.</div>
+        {{/if}}
+        <div id="spinner" class="spinner-wrapper text-center"></div>
+    </div>
+</div>

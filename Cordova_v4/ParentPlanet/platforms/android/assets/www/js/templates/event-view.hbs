@@ -1,0 +1,45 @@
+<div class="header-container" id="header-container">
+</div>
+<div id="view-container" class="view-container">
+	<form id="event-view-form">
+	<div class="row">
+		<fieldset>
+		  <legend>{{summary.value}}</legend>
+		  <ul>
+		    <li class="prepend field">
+		      <span class="adjoined">Date</span><input class="wider text input" id="exdate" type="text" value="{{exdate}}" />
+		    </li>
+		    <li class="prepend field">
+		      <span class="adjoined">From</span><input class="narrow text input" id="dtstart.value" type="text" value="{{dtstart.value}}" ></input>
+		      <span class="adjoined alignleft">To</span><input class="narrow text input" id="dtend.value" type="text" value="{{dtend.value}}" ></input>
+		    </li>
+		    {{#if location.value}}
+		    <li class="prepend field">
+		    	<span class="adjoined">Location</span><input class="wider text input" id="location.value" type="text" value="{{location.value}}" />
+		    </li>
+		    {{/if}}
+		    {{#if description.value}}
+		    <li class="field">
+		      <textarea class="xxwide textarea input" id="description.value" type="textarea" value="">{{description.value}}</textarea>
+		    </li>
+		    {{/if}}
+		    {{#if url.value}}
+		    <li class="prepend field">
+		    	<span class="adjoined">URL</span><input class="wider text input" id="url.value" type="text" value="{{url.value}}" />
+		    </li>
+		    {{/if}}
+		    {{#if organizer.value}}
+		    <li class="prepend field">
+		    	<span class="adjoined">Created By</span><input class="wider text input" id="organizer.value" type="text" value="{{organizer.value}}" />
+		    </li>
+		    {{/if}}
+		    {{#if contact.value}}
+		    <li class="prepend field">
+		    	<span class="adjoined">Contact</span><input class="wider text input" id="contact.value" type="text" value="{{contact.value}}" />
+		    </li>
+		    {{/if}}
+		  </ul>
+		</fieldset>
+	</div>
+	</form>
+</div>

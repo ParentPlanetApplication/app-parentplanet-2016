@@ -1,0 +1,35 @@
+<div class="navbar">
+    <div class="mid-menu">
+        <div class="title">{{title}}</div>
+    </div>
+    <div id="backBtn" class="left-menu text">{{backBtn}}</div>
+</div>
+<div class="main-container">
+    {{!-- After sign up: if match --}}
+    <div id="if-match-screen" class="row">
+        {{!-- Message --}}
+        <div class="twelve columns">
+            <div class="field text-left">
+                <div class="space"></div>
+                <div class="text-left" style="padding:0 10px;">{{signup.verifyEmail}}</div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Next Button --}}
+    <div class="twelve columns">
+        <div class="field text-center">
+            <div class="small-buttons-container right">
+                <div id="nextBtn" class="p2 btn next-btn" style="display:inline-block;">{{doneBtn}}</a></div>
+            </div>
+        </div>
+    </div>
+    <!--div class="twelve columns">
+        <div class="field text-center">
+            <div class="small-buttons-container right">
+                <div id="nextBtn" class="medium info btn next-btn"><a href="/signup/enter-info-page-1">{{nextBtn}}</a>
+                </div>
+            </div>
+        </div>
+    </div-->
+</div> <!-- eo main-container -->

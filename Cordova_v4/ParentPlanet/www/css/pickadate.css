@@ -1,0 +1,8 @@
+/*Move pickadate calendar below date fields*/
+.pickadate__box {
+    margin-top: 213px;
+}
+
+#calendar-index-view .pickadate__box {
+    margin-top: 0px;
+}
