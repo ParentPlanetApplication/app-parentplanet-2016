@@ -1,5 +1,4 @@
-cordova.define("cordova-plugin-calendar.Calendar", function(require, exports, module) { cordova.define("cordova-plugin-calendar.Calendar", function(require, exports, module) {
-"use strict";
+cordova.define("cordova-plugin-calendar.Calendar", function(require, exports, module) { "use strict";
 function Calendar() {
 }
 
@@ -205,6 +204,14 @@ Calendar.prototype.deleteEventFromNamedCalendar = function (title, location, not
   }])
 };
 
+Calendar.prototype.deleteEventById = function (eventId, successCallback, errorCallback) {
+    cordova.exec(successCallback, errorCallback, "Calendar", "deleteEventById", [
+        {
+            "id": eventId
+        }
+    ]);
+};
+
 Calendar.prototype.modifyEventWithOptions = function (title, location, notes, startDate, endDate, newTitle, newLocation, newNotes, newStartDate, newEndDate, options, newOptions, successCallback, errorCallback) {
   if (!(newStartDate instanceof Date && newEndDate instanceof Date)) {
     errorCallback("newStartDate and newEndDate must be JavaScript Date Objects");
@@ -256,32 +263,7 @@ Calendar.prototype.modifyEventInNamedCalendar = function (title, location, notes
   Calendar.prototype.modifyEventWithOptions(title, location, notes, startDate, endDate, newTitle, newLocation, newNotes, newStartDate, newEndDate, options, successCallback, errorCallback);
 };
 
-Calendar.prototype.listEventsInRange = function (startDate, endDate, successCallback, errorCallback) {
-  cordova.exec(successCallback, errorCallback, "Calendar", "listEventsInRange", [{
-    "startTime": startDate instanceof Date ? startDate.getTime() : null,
-    "endTime": endDate instanceof Date ? endDate.getTime() : null
-  }])
-};
-
-Calendar.prototype.deleteEventById = function (eventId, successCallback, errorCallback) {
-  cordova.exec(successCallback, errorCallback, "Calendar", "deleteEventById", [{
-    "id": eventId
-  }]);
-};
-
-Calendar.prototype.listCalendars = function (successCallback, errorCallback) {
-  cordova.exec(successCallback, errorCallback, "Calendar", "listCalendars", []);
-};
-
-Calendar.install = function () {
-  if (!window.plugins) {
-    window.plugins = {};
-  }
-
-  window.plugins.calendar = new Calendar();
-  return window.plugins.calendar;
-};
-
+// dsfhjshfs
 Calendar.prototype.modifyRepeatEventInstance = function (syncId, oldStartDate, oldEndDate, calendar, isCanceled, title, location, notes, startDate, endDate, firstReminderMinutes, secondReminderMinutes, successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, "Calendar", "modifyRepeatEventInstance", [
     {
@@ -300,29 +282,26 @@ Calendar.prototype.modifyRepeatEventInstance = function (syncId, oldStartDate, o
     }]);
 };
 
-Calendar.prototype.deleteEventWithOptions = function (title, location, notes, startDate, endDate, options, successCallback, errorCallback) {
-  // merge passed options with defaults
-  var mergedOptions = Calendar.prototype.getCalendarOptions();
-  for (var val in options) {
-    if (options.hasOwnProperty(val)) {
-      mergedOptions[val] = options[val];
-    }
-  }
-  if (options.recurrenceEndDate != null) {
-    mergedOptions.recurrenceEndTime = options.recurrenceEndDate.getTime();
-  }
-  cordova.exec(successCallback, errorCallback, "Calendar", "deleteEventWithOptions", [{
-    "title": title,
-    "location": location,
-    "notes": notes,
+Calendar.prototype.listEventsInRange = function (startDate, endDate, successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "Calendar", "listEventsInRange", [{
     "startTime": startDate instanceof Date ? startDate.getTime() : null,
-    "endTime": endDate instanceof Date ? endDate.getTime() : null,
-    "options": mergedOptions
+    "endTime": endDate instanceof Date ? endDate.getTime() : null
   }])
 };
 
-cordova.addConstructor(Calendar.install);
+Calendar.prototype.listCalendars = function (successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "Calendar", "listCalendars", []);
+};
 
-});
+Calendar.install = function () {
+  if (!window.plugins) {
+    window.plugins = {};
+  }
+
+  window.plugins.calendar = new Calendar();
+  return window.plugins.calendar;
+};
+
+cordova.addConstructor(Calendar.install);
 
 });

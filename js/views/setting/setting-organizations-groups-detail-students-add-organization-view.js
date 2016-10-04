@@ -26,7 +26,6 @@ define([
     var dataObj = undefined;
 
     var buildEmails = function() {
-        var deferred = $.Deferred();
         console.log('Start build email at: ' + new Date());
         console.log(hashEmails);
 
@@ -53,7 +52,6 @@ define([
         }
 
         var createEmails = function(type, selectedOrgId, groupId, datas, customListId, customListName, recipients) {
-            var deferred = $.Deferred();
             console.log('Start createEmails for <' + type + '> at: ' + new Date());
             var content;
 
@@ -75,15 +73,11 @@ define([
             Parse.Object.saveAll(emails, {
                 success: function(d) {
                     console.log('End createEmails for <' + type + '> at: ' + new Date());
-                    deferred.resolve();
                 },
                 error: function(err) {
                     _alert('Internal Error: Error while saving emails:' + err);
-                    deferred.reject();
                 }
             });
-
-            return deferred;
         }
 
         var processingHashEmails = hashEmails;
@@ -98,7 +92,6 @@ define([
             query.containedIn('objectId', parentIds);
             query.find({
                 success: function(results) {
-                    console.log('Loaded all users to send mail at: ' + new Date());
                     $.each(results, function(index, result) {
                         if (result.get('isEmailDelivery')) {
                             emailList.push(result.get('email'));
@@ -107,7 +100,6 @@ define([
                 },
                 error: function(error) {
                     console.log(error);
-                    deferred.reject();
                 }
             }).then(function() {
                 var UserAcctAccess = Parse.Object.extend("UserAcctAccess", {}, {
@@ -129,7 +121,6 @@ define([
                     },
                     error: function(error) {
                         console.log(error);
-                        deferred.reject();
                     }
                 }).then(function() {
                     _updateInfoCustomListToEmail(dataObj.groupId).then(function(d) {
@@ -140,8 +131,6 @@ define([
                 });
             });
         });
-        deferred.resolve();
-        return deferred;
     };
 
     var loadOrganizationGroups = function() {
@@ -451,9 +440,9 @@ define([
                         name: 'setting-organizations-groups-detail-students'
                     });
                 } else {
-                    getParent(results)
-                        .then(function() { return addToOrgGroup(results); })
-                        .then(function() { createRelation(results); });
+                    getParent(results);
+                    addToOrgGroup(results);
+                    createRelation(results);
                 }
                 createdSpinner.stop();
             },
@@ -521,8 +510,6 @@ define([
         }; //eo createRelation
 
         var getParent = function(allStudentData) {
-            var deferred = $.Deferred();
-
             var selectedOrgGroupId = user.setting.selectedOrgGroupId;
             var parentObjectArray = {};
 
@@ -557,19 +544,40 @@ define([
                 },
                 error: function(error) {
                     console.log(error);
-                    deferred.reject()
                 }
             }).then(function() {
-                _addParentEmail(parentIdArray);
-                addToCustomList(parentObjectArray, parentIdArray).then(function() { deferred.resolve() });
-            });
+                for (var k = 0; k < parentIdArray.length; k++) {
+                    var parentIdToAdd = parentIdArray[k];
+                    _addParentEmail(parentIdToAdd, user.setting.selectedOrgGroupId);
+                }
 
-            return deferred;
+                setTimeout(function() {
+                    addToCustomList(parentObjectArray, parentIdArray);
+                }, 2000);
+            });
         }; //eo getParent
 
+        var getParentEmail = function(customGroup, parentId) {
+            var parentEmail;
+            var query = new Parse.Query(Parse.User);
+            query.equalTo("objectId", parentId);
+            query.find({
+                success: function(results) {
+                    var parentUser = results[0];
+                    var isEmailDelivery = parentUser.get("isEmailDelivery");
+                    if (isEmailDelivery) {
+                        parentEmail = parentUser.get("email");
+                        customGroup.addUnique("userContactEmail", parentEmail);
+                    }
+                    customGroup.save();
+                },
+                error: function(error) {
+
+                }
+            });
+        }; //eo getParentEmail
 
         var addToCustomList = function(parentObjectArray, parentIdArray) {
-            var deferred = $.Deferred();
             var selectedOrgGroupId = user.setting.selectedOrgGroupId;
             var UserCustomList = Parse.Object.extend("UserCustomList", {}, {
                 query: function() {
@@ -585,6 +593,7 @@ define([
                         var recipientList = customGroup.get("recipientList");
                         for (var j = 0; j < parentIdArray.length; j++) {
                             parentId = parentIdArray[j];
+                            getParentEmail(customGroup, parentId);
                             var recipient = jQuery.grep(recipientList, function(n) {
                                 return n.parent == parentId;
                             });
@@ -599,13 +608,11 @@ define([
                                 }
                             }
                         } //eo parentIdArray for loop
+                        customGroup.save();
                     } //eo results for loop
-
-                    Parse.Object.saveAll(results);
                 },
                 error: function(error) {
                     console.log(error);
-                    deferred.reject();
                 }
             }).then(function() {
                 var internalDeferreds = [
@@ -613,12 +620,8 @@ define([
                     addOldHomework(selectedOrgGroupId, parentIdArray, parentObjectArray)
                 ];
 
-                $.when.apply(this, internalDeferreds).then(buildEmails).done(function() {
-                    deferred.resolve();
-                });
-            });
-
-            return deferred;
+                $.when.apply(this, internalDeferreds).then(buildEmails);
+            })
         }; //eo addToCustomList
 
         var addOldEvents = function(groupId, parentIdArray, parentObjectArray) {
@@ -676,19 +679,7 @@ define([
                         });
                     }
 
-                    function addUserEventRelations(parentIdArray, parentObjectDict, events, groupId) {
-
-                        function buildEventIdToEventDictionary() {
-                            var dict = {};
-                            events.forEach(function(event) {
-                                dict[event.id] = event;
-                            });
-
-                            return dict;
-                        }
-
-                        var eventDict = buildEventIdToEventDictionary();
-
+                    function addUserEventRelations(parentIdArray, parentObjectDict, eventId, groupType, groupId) {
                         var UserEventRelation = Parse.Object.extend("UserEventRelation", {}, {
                             query: function() {
                                 return new Parse.Query(this.className);
@@ -696,17 +687,13 @@ define([
                         });
                         var query = UserEventRelation.query();
                         query.containedIn("parentId", parentIdArray);
-                        query.containedIn("eventId", Object.keys(eventDict));
+                        query.equalTo("eventId", eventId);
                         query.find({
                             success: function(results) {
-                                function buildDictKey(parentId, eventId) {
-                                    return parentId + '_' + eventId;
-                                }
-
-                                function buildParentIdToRelationsDictionary() {
+                                function buildParentIdToRelationDictionary() {
                                     var dict = {};
                                     results.forEach(function(relation) {
-                                        dict[buildDictKey(relation.get("parentId"), relation.get("eventId"))] = relation;
+                                        dict[relation.get("parentId")] = relation;
                                     });
 
                                     return dict;
@@ -726,82 +713,46 @@ define([
                                     return relation;
                                 };
 
-                                function createChunks(arr, chunkSize) {
-                                    var groups = [],
-                                        i;
-                                    for (i = 0; i < arr.length; i += chunkSize) {
-                                        groups.push(arr.slice(i, i + chunkSize));
-                                    }
-                                    return groups;
-                                }
-
-
-                                var saveDeferred = $.Deferred();
-                                saveDeferred.resolve();
-                                var existingRelationDict = buildParentIdToRelationsDictionary(results);
-                                var allChunks = [];
+                                var allEventRelations = [];
+                                var existingRelationDict = buildParentIdToRelationDictionary(results);
                                 parentIdArray.forEach(function(parentId) {
+                                    var eventRelation = existingRelationDict[parentId];
                                     var childIdList = parentObjectDict[parentId].children;
-                                    var allEventRelations = [];
 
-                                    events.forEach(function(event) {
-                                        var eventRelation = existingRelationDict[buildDictKey(parentId, event.id)];
-                                        if (eventRelation) {
-                                            for (var i = 0; i < childIdList.length; i++) {
-                                                var childId = childIdList[i];
-                                                eventRelation.addUnique("childIdList", childId);
-                                            }
-                                            eventRelation.set("organizationId", selectedOrgId);
-                                            if (!eventRelation.get('groupId')) {
-                                                eventRelation.set("groupId", groupId);
-                                            }
-                                            allEventRelations.push(eventRelation);
-                                        } else {
-                                            allEventRelations.push(createUserEventRelation(parentId, childIdList, event.id, event.get('groupType'), groupId));
+                                    if (eventRelation) {
+                                        for (var i = 0; i < childIdList.length; i++) {
+                                            var childId = childIdList[i];
+                                            eventRelation.addUnique("childIdList", childId);
                                         }
-                                    });
-
-                                    function saveChunk() {
-                                        var deferred = $.Deferred();
-                                        var chunk = allChunks[0];
-                                        console.log('In saveUserEventRelation for chunk ' + chunk[0].id + ' at: ' + new Date());
-                                        Parse.Object.saveAll(chunk, {
-                                            success: function(d) {
-                                                allChunks.splice(0, 1);
-                                                console.log('End saveUserEventRelation for chunk ' + chunk[0].id + ' at: ' + new Date() + '### remaining chunks ' + allChunks.length);
-                                                
-                                                if (allChunks.length == 0) {
-                                                    _alert('Student(s) successfully added to group');
-                                                }
-                                                deferred.resolve();
-                                            },
-                                            error: function(err) {
-                                                _alert('Internal Error: Error while saving event relations:' + err);
-                                            }
-                                        });
-
-                                        return deferred;
+                                        eventRelation.set("organizationId", selectedOrgId);
+                                        if (!eventRelation.get('groupId')) {
+                                            eventRelation.set("groupId", groupId);
+                                        }
+                                        allEventRelations.push(eventRelation);
+                                    } else {
+                                        allEventRelations.push(createUserEventRelation(parentId, childIdList, eventId, groupType, groupId));
                                     }
-
-                                    console.log('Start saveUserEventRelation for user ' + parentId + ' at: ' + new Date());
-                                    createChunks(allEventRelations, 20).forEach(function(chunk) {
-                                        allChunks.push(chunk);
-                                        saveDeferred = saveDeferred.then(saveChunk);
-                                    });
                                 });
 
-
-
-
+                                Parse.Object.saveAll(allEventRelations, {
+                                    success: function(d) {
+                                        console.log('End addUserEventRelation for eventId<' + eventId + '> at: ' + new Date());
+                                    },
+                                    error: function(err) {
+                                        _alert('Internal Error: Error while saving event relations:' + err);
+                                    }
+                                });
                             },
                             error: function(error) {
-                                _alert('Error: ' + JSON.stringify(error));
+                                alert('Error: ' + JSON.stringify(error));
                             }
                         }); //eo query.find
                     }; //eo addUserEventRelation					
 
                     appendToEmailHash();
-                    addUserEventRelations(parentIdArray, parentObjectArray, results, groupId);
+                    results.forEach(function(event) {
+                        addUserEventRelations(parentIdArray, parentObjectArray, event.id, event.get("groupType"), groupId);
+                    });
 
                     deferred.resolve();
                 },
@@ -914,7 +865,6 @@ define([
         }; //eo addOldHomework
 
         var addToOrgGroup = function(allStudentData) {
-            var deferred = $.Deferred();
             var selectedOrgGroupId = user.setting.selectedOrgGroupId;
             /*
               Change code by phuongnh@vinasource.com
@@ -944,15 +894,41 @@ define([
 
                         }
                     }
-                    deferred.resolve();
                 },
                 error: function(error) {
                     console.log(error);
                     _confirm("There was an error connecting to the server, please try again");
                 }
             });
-
-            return deferred;
+            // for ( var i = 0; i < allStudentData.length; i++ ) {
+            // 	var student = allStudentData[ i ];
+            // 	var studentId = student.id;
+            // 	var OrganizationGroup = Parse.Object.extend( "OrganizationGroup", {}, {
+            // 		query: function () {
+            // 			return new Parse.Query( this.className );
+            // 		}
+            // 	} );
+            // 	var query = OrganizationGroup.query();
+            // 	query.equalTo( "objectId", selectedOrgGroupId );
+            // 	query.find( {
+            // 		success: function ( results ) {
+            // 			if ( results.length == 0 ) {
+            // 				_confirm( "There was an error finding group" );
+            // 				spinner.hide();
+            // 			} else {
+            // 				//Add child to organization
+            // 				var orgGroup = results[ 0 ];
+            // 				orgGroup.addUnique( "studentIdList", studentId );
+            // 				orgGroup.save();
+            //
+            // 			}
+            // 		},
+            // 		error: function ( error ) {
+            // 			console.log( error );
+            // 			_confirm( "There was an error connecting to the server, please try again" );
+            // 		}
+            // 	} );
+            // }
         }; //eo addToOrgGroup
         //spinner.hide();
     }; //eo processResponses

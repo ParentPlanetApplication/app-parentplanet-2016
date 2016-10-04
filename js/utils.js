@@ -2353,13 +2353,15 @@ var _showColorPicker = function(parent, target) {
 
     // show pp
     var pTop = $("#main-content-inner").position().top;
-    if (pTop < 0) {
+    if (pTop < 0 && $("#color-picker").offset().top < 0) {
         var h = $("#color-picker").height();
         var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
         var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
         var top = ((height / 2) - (h / 2)) + dualScreenTop;
-
+        //alert($("#color-picker").offset().top);
         $('#color-picker').offset({ top: top });
+    } else {
+        $('#color-picker').offset({ top: 45 });
     }
 
     $(".cp-bg").on("click", function(e) {
@@ -3591,9 +3593,7 @@ var _isRepeat = function(repeatString) {
  * add parent and secondary parents email to UserCustomList table in the userContactEmail array
  * parentId: Parent's id of the child.
  */
-var _addParentEmail = function(parentIds, selectedOrgGroupId) {
-    parentIds = Array.isArray(parentIds) ? parentIds : [parentIds];
-
+var _addParentEmail = function(parentId, selectedOrgGroupId) {
     var Parse = _parse;
     var deferred = $.Deferred();
     var UserAcctAccess = Parse.Object.extend("UserAcctAccess", {}, {
@@ -3602,85 +3602,100 @@ var _addParentEmail = function(parentIds, selectedOrgGroupId) {
         }
     });
     var query = UserAcctAccess.query();
-    query.containedIn("parentId", parentIds);
+    query.equalTo("parentId", parentId);
     query.find({
         success: function(results) {
             return results;
         },
         error: function(error) {
-            deferred.reject(error);
+            deferred.reject();
+            return error;
         }
     }).then(function(results) {
-        var accessDeferred = $.Deferred();
-
-        var uList = [];
-        var givenAccessUserIds = parentIds.slice();
-
-        results.forEach(function(value) {
-            givenAccessUserIds.push(value.get('givenAccessUserId'));
-        });
+        if (results.length === 0) {
+            deferred.resolve();
+            return;
+        }
 
         var user = JSON.parse(localStorage.getItem("user"));
+        //var selectedOrgGroupId = user.setting.selectedOrgGroupId;
         var User = Parse.Object.extend("User", {}, {
             query: function() {
                 return new Parse.Query(this.className);
             }
         });
         var query = User.query();
+        var uList = [];
+        var givenAccessUserId = [parentId];
+
+        _.each(results, function(value) {
+            givenAccessUserId.push(value.attributes.givenAccessUserId);
+        });
+
+
+        var accessDeferred = $.Deferred();
         //Get Email list from User table base on isEmailDelivery is true
-        query.containedIn("objectId", givenAccessUserIds);
+        query.containedIn("objectId", givenAccessUserId);
         query.find({
             success: function(results) {
-                if (results.length > 0) {
-                    var allUsers = _.filter(results, function(user) {
+                if (results.length) {
+                    uList = _.filter(results, function(user) {
                         return !!user.get("isEmailDelivery");
                     });
 
-                    var UserCustomList = Parse.Object.extend("UserCustomList", {}, {
-                        query: function() {
-                            return new Parse.Query(this.className);
-                        }
-                    });
-                    var query = UserCustomList.query();
-                    query.equalTo("groupId", selectedOrgGroupId);
-                    query.find({
-                        success: function(results) {
-                            for (var i = 0; i < results.length; i++) {
-                                var customGroup = results[i];
-
-                                //Add email to userContactEmail
-                                for (var j = 0; j < allUsers.length; j++) {
-                                    customGroup.addUnique("userContactEmail", allUsers[j].attributes.email);
-                                }
-                            }
-
-                            Parse.Object.saveAll(results, {
-                                success: function(d) {
-                                    console.log('save custom list successful');
-                                    var emailList = [];
-                                    for (var index = 0; index < allUsers.length; index++) {
-                                        emailList.push(allUsers[index].attributes.email);
-                                    }
-                                    _emailList = emailList;
-                                    deferred.resolve(emailList);
-                                },
-                                error: function(err) {
-                                    deferred.reject(err);
-                                    _alert('Internal Error: Error while saving UserCustomList:' + err);
-                                }
-                            });
-                        },
-                        error: function(err) {
-                            deferred.reject(err);
-                            _alert('Internal Error: Error while querying UserCustomList:' + err);
-                        }
-                    });
+                    accessDeferred.resolve(uList);
+                    //return uList;
                 }
             },
-            error: function(err) {
-                deferred.reject(err);
+            error: function(error) {
+                return uList;
             }
-        })
+        }).then(function(results) {
+
+            accessDeferred.done(function() {
+                if (results.length === 0) {
+                    deferred.resolve();
+                    return;
+                }
+
+                var UserCustomList = Parse.Object.extend("UserCustomList", {}, {
+                    query: function() {
+                        return new Parse.Query(this.className);
+                    }
+                });
+                var query = UserCustomList.query();
+                var userAcctAccessList = results;
+                var userAcctAccessListLength = userAcctAccessList.length;
+
+                query.equalTo("groupId", selectedOrgGroupId);
+                query.find({
+                    success: function(results) {
+                        for (var i = 0; i < results.length; i++) {
+                            var customGroup = results[i];
+                            var j = 0;
+
+                            //Add email to userContactEmail
+                            for (j = 0; j < userAcctAccessListLength; j++) {
+                                customGroup.addUnique("userContactEmail", userAcctAccessList[j].attributes.email);
+                            }
+                            customGroup.save();
+                        }
+                        console.log('save custom list successful');
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+
+                var emailList = [];
+                for (var index = 0; index < userAcctAccessListLength; index++) {
+                    emailList.push(userAcctAccessList[index].attributes.email);
+                }
+                _emailList = emailList;
+                deferred.resolve(emailList);
+            });
+
+        });
     });
 
     return deferred;

@@ -44,9 +44,6 @@ exports._defaults = {
 // listener
 exports._listener = {};
 
-// Registered permission flag
-exports._registered = false;
-
 
 /********
  * UTIL *
@@ -63,14 +60,11 @@ exports.applyPlatformSpecificOptions = function () {
 
     switch (device.platform) {
     case 'Android':
-        defaults.icon      = 'res://ic_popup_reminder';
-        defaults.smallIcon = undefined;
+        defaults.icon      = 'res://icon';
+        defaults.smallIcon = 'res://ic_popup_reminder';
         defaults.ongoing   = false;
         defaults.autoClear = true;
-        defaults.led       = undefined;
-        defaults.ledOnTime = undefined;
-        defaults.ledOffTime = undefined;
-        defaults.color     = undefined;
+        defaults.led       = 'FFFFFF';
         break;
     }
 
@@ -172,16 +166,6 @@ exports.convertProperties = function (options) {
 
     if (typeof options.data == 'object') {
         options.data = JSON.stringify(options.data);
-    }
-
-    if (options.every) {
-        if (device.platform == 'iOS' && typeof options.every != 'string') {
-            options.every = this.getDefaults().every;
-            var warning = 'Every option is not a string: ' + options.id;
-            warning += '. Expects one of: second, minute, hour, day, week, ';
-            warning += 'month, year on iOS.';
-            console.warn(warning);
-        }
     }
 
     return options;
