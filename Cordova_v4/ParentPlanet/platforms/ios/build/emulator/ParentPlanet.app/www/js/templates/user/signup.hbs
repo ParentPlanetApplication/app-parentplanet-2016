@@ -1,0 +1,61 @@
+<div class="navbar">
+    <div class="mid-menu">
+        <div class="title">{{title}}</div>
+    </div>
+    <div id="backBtn" class="left-menu text">{{backBtn}}</div>
+</div>
+<div class="main-container innerview-container" style="overflow: scroll;">
+    {{!-- Parent's SignUp form --}}
+    <div id="signup-screen" class="row">
+        {{!-- Password TextField --}}
+        {{!-- <div class="twelve columns text-center">
+            <div class="space"></div>
+            <div class="reg-type-menu" status="active">{{signup.parentMenu}}</div>
+            <div class="reg-type-menu">{{signup.teacherAdminMenu}}</div>
+        </div>
+         --}} 
+         <br/>
+        {{!-- Email TextField --}}
+        <div class="twelve columns">
+            <div class="field text-center">
+                <div class="label">{{signup.email}}</div>
+                <input id="emailForm" class="input" type="email" autocapitalize="none" autocorrect="off" autocomplete="off" placeholder="User email" />
+            </div>
+        </div>
+       <!-- 
+        <div class="twelve columns">
+            <div class="field text-center no-margin-bottom">and/or</div>
+        </div>
+        {{!-- Mobile Phone TextField --}}
+        <div class="twelve columns">
+            <div class="field text-center">
+                <div class="label">{{signup.mobile}}</div>
+                <input id="mobilePhoneForm" class="input" {{!-- type="text" pattern="\d*" --}} type="tel" placeholder="" />
+            </div>
+        </div>
+        -->
+        {{!-- Password TextField --}}
+        <div class="twelve columns">
+            <div class="field text-center">
+                <div class="label">{{signup.password}}</div>
+                <input id="passwordForm" class="input" type="password" placeholder="" autocorrect="off" autocomplete="off"/>
+            </div>
+        </div>
+        {{!-- Verify Password TextField --}}
+        <div class="twelve columns">
+            <div class="field text-center">
+                <div class="label">{{signup.verifypassword}}</div>
+                <input id="verifyPasswordForm" class="input" type="password" placeholder="" autocorrect="off" autocomplete="off"/>
+            </div>
+        </div>
+        {{!-- Next Button --}}
+        <div class="twelve columns">
+            <div class="field">
+                <span id="legal">By clicking next you agree to the <span id="terms" style="font-weight: bold; cursor: pointer;">Terms of Use</span> and <span id="privacy" style="font-weight: bold; cursor: pointer;">Privacy Policy</span></span>
+                <div class="small-buttons-container right">
+                    <div id="nextBtn" class="p2 btn next-btn">{{nextBtn}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

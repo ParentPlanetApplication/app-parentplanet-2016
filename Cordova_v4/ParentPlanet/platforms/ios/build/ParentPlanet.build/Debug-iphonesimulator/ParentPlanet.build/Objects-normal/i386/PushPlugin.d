@@ -1,0 +1,35 @@
+dependencies: \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/PushPlugin.m \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/PushPlugin.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDV.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVAvailability.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVAvailabilityDeprecated.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVAppDelegate.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVViewController.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVInvokedUrlCommand.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVCommandDelegate.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVCommandQueue.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVScreenOrientationDelegate.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVPlugin.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVPluginResult.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/NSMutableArray+QueueAdditions.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVWebViewEngineProtocol.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVURLProtocol.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVWhitelist.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVTimer.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/build/emulator/include/Cordova/CDVUserAgentUtil.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/CloudMessaging.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/Core.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GGLConfiguration.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GGLContext.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GGLErrorCode.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GCMConfig.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GCMPubSub.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GCMService.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GGLContext+CloudMessaging.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GGLInstanceIDHeaders.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GGLInstanceID.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GGLInstanceIDConfig.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GGLInstanceIDDelegate.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GoogleCloudMessaging.h \
+  /Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/ios/ParentPlanet/Plugins/phonegap-plugin-push/GCM/Headers/GCMReceiverDelegate.h

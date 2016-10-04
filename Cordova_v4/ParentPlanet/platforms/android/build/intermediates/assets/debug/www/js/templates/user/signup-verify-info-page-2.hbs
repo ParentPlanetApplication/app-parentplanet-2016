@@ -1,0 +1,50 @@
+<div class="user-signup">
+
+    <div class="navbar">
+        <div class="mid-container"><div class="title">{{title}}</div></div>
+        <a class="left-menu" href="/"><i class="icon-left-open"></i> {{backBtn}}</a>
+    </div>
+
+    <div class="main-container">
+
+        <div id="verification-page-2" class="row">
+            {{!-- Message --}}
+            <div class="twelve columns">
+                <div class="field text-left">
+                    <div class="space"></div>
+                    <div class="text-center">{{afterSignup.confirmChildrenMsg}}</div>
+                </div>
+            </div>
+
+            {{!-- Children List --}}
+            {{!-- ToDo: Here we have to use JavaScript to populate content --}}
+
+            {{!-- <div class="twelve columns">
+                <div class="field text-center">
+                    <div class="label">{{afterSignup.firstName}}</div>
+                    <input class="input" type="text" placeholder="" />
+                </div>
+            </div> --}}
+
+            <div class="twelve columns">
+                <div class="field text-center">
+                    <i class="icon-plus"></i> {{afterSignup.addMoreChildrenBtn}}
+                </div>
+            </div>
+            
+
+            {{!-- Next Button --}}
+            <div class="twelve columns">
+                <div class="field text-center">
+                    <div class="small-buttons-container right">
+                        <div id="nextBtn" class="medium info btn next-btn"><a>{{nextBtn}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

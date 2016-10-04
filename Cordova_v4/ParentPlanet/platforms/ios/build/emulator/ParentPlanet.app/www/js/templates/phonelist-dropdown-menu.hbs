@@ -1,0 +1,21 @@
+<ul class="alert-dropdown-menu">
+{{#if contact.showPhoneList}}
+		{{#if contact.showMobilePhone}}
+			<li>
+      	<a href="tel://{{contact.mobilePhone}}"><i class="icon-fontello-phone"></i>Mobile: {{contact.mobilePhone}}</a>
+      </li>
+    {{/if}}
+    {{#if contact.showWorkPhone}}
+    	<li>
+      	<a href="tel://{{contact.workPhone}}"><i class="icon-fontello-phone"></i>Work: {{contact.workPhone}}</a>
+      </li>
+    {{/if}}
+    {{#if contact.showHomePhone}}
+    	<li>
+    		<a href="tel://{{contact.homePhone}}"><i class="icon-fontello-phone"></i>Home: {{contact.homePhone}}</a>
+      </li>
+    {{/if}}
+{{else}}
+    <li>No Public Phonelist Data Made Available</li>
+{{/if}}
+</ul>

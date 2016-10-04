@@ -1,0 +1,440 @@
+/* Imports */
+@import "views/calendar";
+@import "views/custom-list";
+@import "views/pickadate";
+@import "views/create";
+@import "views/etc";
+@import "views/home";
+@import "views/message";
+@import "views/navbar";
+@import "views/pushnoti";
+@import "views/spinner";
+@import "views/setting";
+@import "views/user";
+@import "views/homework";
+@import "views/contacts";
+@import "views/toggle-switch";
+@import "views/mso";
+
+
+//@import "p2icons/parentplanet"; //first get the list
+@import "parentplaneticons"; //now define the icon classes based on the list and fontfamily
+
+// CSS for Cordova Apps
+
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-transform: translate3d(0px,0px,0px);
+    -webkit-overflow-scrolling: touch;  /* Enable smooth scroll on iOS */
+}
+html {
+    position: relative;
+    min-height: 100%;
+    background: #ccc;
+}
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color: $global-bg-color;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    color: $default-font-color;
+    background: #fff;
+
+    //There are for testing purpose on web browser
+    @if $webversion {
+      max-width: 100%;
+      min-width: 320px;
+      max-height: 100%;
+      min-height: 480px;
+    } @else {
+      width: 100%;
+      height: 100%;
+      max-width: 621px;
+      max-height: 1104px;
+      /* max-width: 320px;
+      max-height: 480px; */
+    }
+      height: 100%;
+}
+[contenteditable="true"] , input, textarea {
+        -webkit-user-select: auto !important;
+        -khtml-user-select: auto !important;
+        -moz-user-select: auto !important;
+        -ms-user-select: auto !important;
+        -o-user-select: auto !important;
+        user-select: auto !important;  
+  }
+a {
+  color: $body-font-color;
+  cursor: pointer;
+}
+a.active-link {
+  color: $p2-green-color;
+  cursor: pointer;
+}
+a:active, a:hover, a:after{
+  color: $p2-green-color;
+  cursor: pointer;
+}
+.empty-space-item {
+  height: 20px !important;
+  /* background-color: #bbb; */
+}
+.menu-item {
+  padding-top: 10px;
+  padding-left: 10px;
+}
+#site-container {
+  height:100%;
+}
+#main-container {
+  height:100%;
+  background: $white;
+
+  .view-container {
+    overflow: hidden;
+  }
+}
+.inner-container {
+  height:100%;
+  padding: 0;
+  overflow: hidden !important;
+}
+.navbar {
+  margin-bottom: 0;
+  min-height: 20px;
+  background: $primary-fill-color;
+}
+.header-container, .footer-container {
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    position: fixed;
+    //z-index: 1000;
+}
+.header-container {
+    top:0px;/* 
+    border-bottom: $separator-height solid $global-bg-color; */
+    background: $primary-fill-color;
+    height: $navbar-height; //This is to make sure that the container won't disappear on mobile, by default it will become 1px
+
+    .navbar.row {
+      height: 100%;
+      min-height: 100%;
+      ul {
+        height:auto;
+        max-height: $navbar-height;
+        top: 0;
+        background: none;
+        display: table !important;  //By default, display will be changed to "block" on mobile and the menus won't cover all the area of the navbar
+
+        .columns{
+            //Force the menu item to always stay the same regardless of the screen size
+            display: table-cell !important;
+        }
+        li {
+          min-height: $navbar-height;
+          padding-top: $ios-statusbar-height;
+        }
+
+        li.left-icon{
+            text-align: left;
+        }
+        li.right-icon{
+            text-align: right;
+        }
+
+        li > a {
+          text-shadow: none;
+          height: 43px;
+          line-height: 2.5em;
+
+          i {
+            font-size: $norm;
+          }
+        }
+        li:hover > a, li > a:hover,li:active > a, li > a:active {
+          background: none !important;
+        }
+
+      }
+    }
+}
+div.outer-page-container {
+  height:100%;
+  background: $global-bg-color;
+  -webkit-transition:all 0.3s ease;
+  -moz-transition:all 0.3s ease;
+  -o-transition:all 0.3s ease;
+  -ms-transition:all 0.3s ease;
+  transition:all 0.3s ease;
+}
+
+div.outer-page-container.active {
+  -webkit-transform: translate3d($sidebar-width,0,0);
+  -moz-transform: translate3d($sidebar-width,0,0);
+  -o-transform: translate3d($sidebar-width,0,0);
+  -ms-transform: translate3d($sidebar-width,0,0);
+  transform: translate3d($sidebar-width,0,0);
+}
+.footer-container {
+  bottom:0px;
+  height: $footer-height;
+  min-height: $footer-height;
+  border-top: solid 1px #ccc;
+  cursor: pointer
+}
+.sidebar-container, .page-container {
+  margin-top:0;
+  height: 100%;
+  overflow: hidden !important;
+}
+.sidebar-container {
+  color: $navbar-link-color;
+  padding: 10px 20px;
+  ul li {
+    border-bottom: 1px solid $navbar-link-color;
+  }
+}
+.home-view {
+  height:100%;
+  width: 100%;
+  position:absolute;
+  top:0;
+}
+.home {
+  padding: 0px 20px;
+  background: $global-bg-color;
+}
+.splitpane-dragger {
+  text-align: right;
+  width: 100%;
+  height: $dragger-height;
+  background: $primary-fill-color;
+  color: $toolbar-link-color;
+  border-top: $separator-height solid $global-bg-color;
+  i {
+    margin: 0 auto;
+    vertical-align: top;
+    font-size: 1.2em;
+    line-height: $dragger-height;
+    width: 100%;
+    //border-left: 2px solid #fff;
+    cursor:ns-resize;
+    text-align: right;
+    padding-right: 20px;
+  }
+}
+
+.sidebar-container {
+  position: fixed;
+  left: 0;
+  z-index: -1;
+  top: 0;
+  right: auto;
+  bottom: 0;
+  left: auto;
+  width: $sidebar-width;
+  background: $primary-fill-color;
+  -webkit-overflow-scrolling: touch;
+}
+
+//calendar events list
+//calendar events list
+.calendar-grid {
+  background: $global-bg-color;
+  padding: 0 2px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  .row {
+    padding: 4px 0;
+    border-bottom: 1px solid $underline-color;
+    line-height: 1.3em;
+    padding: 7px 5px 2px 0px;
+    .truncate {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+    }
+    .event-icon {
+      font-size: 1.3em;
+      margin-right:10px;
+    }
+    .datetime {
+      text-align: right;
+      font-size: 0.95em;
+    }
+    .centered {
+      text-align: center;
+    }
+  }
+  
+}
+#calendargrid .row.header {
+  padding-bottom: 0;
+  padding-top: 8px;
+  border-bottom: none;
+  cursor: default;
+  font-size: 0.9em;
+  line-height: 0.9em;
+}
+#calendargrid .row.lastoftheday {
+  border-bottom: 1px solid $group-border-color;
+}
+
+.xcol { //use table-cell for columns in the lists
+  display:table-cell;
+}
+.blank { //hide the icon item
+  color: $global-bg-color;
+}
+
+footer.row.footer-navbar {
+    width: 100%;
+    padding: 0 0;
+    min-height: $footer-height;
+    display: block;
+    position: relative;
+    background: $primary-fill-color;
+    //border-top: $separator-height solid $global-bg-color;
+    ul {
+    }
+}
+
+#footer-toolbar.toolbar-nav {
+  margin:0 auto;
+  width: 100%;
+  display: table;
+
+  li {
+    display: inline-block;
+    text-align: center;
+    padding-top: 0;
+    margin: 0;
+    height: $footer-height;
+    color: $toolbar-link-color;
+    width: 20%;
+  }
+  li.active{
+    //color: $navbar-link-color;
+    color: $navbar-link-color;
+    //background: #e4e4e4;
+  }
+  .toolbar-nav-tool-wrapper {
+    padding: 0 2px;
+  }
+  .toolbar-nav-icon {
+    font-size: 30px !important;
+    margin-top: 5px;
+  }
+  .toolbar-nav-label {
+    padding: 0px;
+    font-size: 14px;
+    margin-top: -11px;
+  }
+  i {
+    margin: 0 auto;
+  }
+}
+
+//view styling
+#event-view-display.event-view {
+  padding: 0 10px;
+  form#event-view-form fieldset {
+    margin: 5px 0;
+    padding: 0.3em 0.5em;
+    .field {
+      margin-bottom: 0.5em;
+      padding: 0em;
+      input {
+        //border: none;
+        color: $body-font-color;
+        height: 1.9em;
+      }
+      input.wider {
+          width: 75%;
+      }
+      span.alignleft {
+        margin-left: -4px;
+        min-width: 2em;
+      }
+      textarea {
+        line-height: 1.4em;
+        height: 4em;
+      }
+    } //eo .field
+    legend {
+      font-size: 1.1em;
+      padding: 5px 10px 0 10px
+    }
+    .prepend .adjoined, .append .adjoined {
+      height: 1.9em;
+      min-width: 4.5em;
+      text-align: right;
+      font-weight: 500;
+    }
+
+  } //eo .fieldset
+}
+
+.view-container{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding-top: $navbar-height;
+  padding-bottom: $footer-height;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  cursor: default;
+  //background: $white;
+
+  .innerview-container{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+} 
+
+/* Overthrow CSS:
+   Enable overflow: auto on elements with overthrow class when html element has overthrow class too */
+.overthrow-enabled .overthrow {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* toggle checkboxes: match P2 color scheme */
+.check:checked ~ .track {
+  box-shadow: inset 0 0 0 20px $p2-green-color !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

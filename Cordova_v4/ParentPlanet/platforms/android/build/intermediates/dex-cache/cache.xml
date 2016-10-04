@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/android/CordovaLib/unspecified/release/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="b5b7c1768dedf08c173bbccdadf19dc8e9120dcb">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/release/CordovaLib-unspecified-release_a29e78cb559ce7ef57d41b445e83f1ec206bda6f.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.0.0-alpha2/support-annotations-24.0.0-alpha2.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8071e1e6cd07e9253720313d6c14286a7ee424e0">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/support-annotations-24.0.0-alpha2_212703bac1efa941c537a776136b6cf6b681693c.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v13/24.0.0-alpha2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="09d2f44a44d3d2cbae6da115ee2d4a8fc8e12783">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/com.android.support-support-v13-24.0.0-alpha2_0f49a9d0a58cb4b8bae19cfb9969670e1ab5a531.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.1/2e66da15851f9f5b5079228f856c2f090ba98c38/gson-2.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2e66da15851f9f5b5079228f856c2f090ba98c38">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/gson-2.1_c98c22c2daf432a28b70d162de06fa9d7541b99f.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.22.0/d441fc58329c4a4c067acec04ac361627f66ecc8/google-http-client-1.22.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d441fc58329c4a4c067acec04ac361627f66ecc8">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-http-client-1.22.0_6de667257bd1a7dfa3b9daa431205fe017aa7aa6.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/jackson-core-2.1.3_ee6d6aca15cabe111d37c933dc590009f2867db0.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.19.0/b3cdefb990d5212bb2a130525b20e2c44aeffc4c/google-http-client-gson-1.19.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="b3cdefb990d5212bb2a130525b20e2c44aeffc4c">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-http-client-gson-1.19.0_88d5c17545b4480a8b8dbe671cafa9b33bcef18a.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.22.0/244350c0c845c583717ade13f5666a452fd0cfa/google-api-client-1.22.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0244350c0c845c583717ade13f5666a452fd0cfa">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-api-client-1.22.0_b9901795ccd369e59c35b518f02ff1db8a12d763.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-8.4.0_638dbbce2ec53df109381fb5cb9f154e95d23f14.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0-alpha2/jars/libs/internal_impl-24.0.0-alpha2.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e460bc069dfd21d22770cf2a2370c9021b9c98a2">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/internal_impl-24.0.0-alpha2_fb82875a1aebe21a56c5a4b6ab6f4cc9c02b2d62.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-jetty/1.20.0/33ce9d07291881459aacb459ab4aa20c5fb97ffc/google-oauth-client-jetty-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="33ce9d07291881459aacb459ab4aa20c5fb97ffc">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-oauth-client-jetty-1.20.0_63eba6dee08039569d2a61408cca52e98cc3fb7f.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-java6/1.20.0/1b12417c242005a61679ddce26636a7439d8c2fe/google-oauth-client-java6-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1b12417c242005a61679ddce26636a7439d8c2fe">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-oauth-client-java6-1.20.0_3e80d423707d81ece0b71eeb12e032ec280635ea.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty/jetty/6.1.26/2f546e289fddd5b1fab1d4199fbb6e9ef43ee4b0/jetty-6.1.26.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2f546e289fddd5b1fab1d4199fbb6e9ef43ee4b0">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/jetty-6.1.26_22099e87fbe9cb4718108b46bfd6e68689295113.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.19.0/ba2aafb867f6af469f936ae76426cf0a280094bd/google-api-client-android-1.19.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ba2aafb867f6af469f936ae76426cf0a280094bd">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-api-client-android-1.19.0_3c97f0c14072aa255e59df005fef9452c7e25ab7.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-8.4.0_d8685d7fd2b7e3ecf4ecad3e25882eb458518486.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.19.0/e3f11020c2c812112803d252d1392872d3f619c8/google-http-client-android-1.19.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e3f11020c2c812112803d252d1392872d3f619c8">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-http-client-android-1.19.0_d0ad1a026f0bcee71e6f5e41254e3de988ed52ee.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="b82b8e847173c28efffcd291b2a0b1ae9ad17fa4">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-identity-8.4.0_d82126553c1c721c4cba8bf94b57a3ce9c1bc23f.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="613298b7aa012f121ce542881c0a599ebd8078f2">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-measurement-8.4.0_09a6c7ef87c4acbce441bdf3a90fd5211eda7bae.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/android/CordovaLib/unspecified/debug/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="dddecdfed25192d16ae7f9636f9defbdf0ea4ed8">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/CordovaLib-unspecified-debug_70ddadfb23e6e9acecd2f19f1c145a80ebdd6262.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/8.4.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2d7fe76982677315c4dc4edfb459c8ca718a9d4c">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-gcm-8.4.0_922f89b7c2a2f208889b317a907ea0a674307076.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/me.leolin/ShortcutBadger/1.1.4/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="b346a5d3fc5d6d1d36c6262c8cc865b76df9f40c">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/me.leolin-ShortcutBadger-1.1.4_85ed5115009c14cd343c64dc31559a13d6394241.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty/jetty-util/6.1.26/e5642fe0399814e1687d55a3862aa5a3417226a9/jetty-util-6.1.26.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5642fe0399814e1687d55a3862aa5a3417226a9">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/jetty-util-6.1.26_798abad6969b1b52a84279661f7909247f8d8974.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-calendar/v3-rev189-1.22.0/1ad60b730593e42efbb379049cd7e262242f8b7a/google-api-services-calendar-v3-rev189-1.22.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1ad60b730593e42efbb379049cd7e262242f8b7a">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-api-services-calendar-v3-rev189-1.22.0_7d3b4c335db5ae18a0cfb7e3e0e7a95425b5741f.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.guava/guava-jdk5/17.0/463f8378feba44df7ba7cd9272d01837dad62b36/guava-jdk5-17.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="463f8378feba44df7ba7cd9272d01837dad62b36">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/guava-jdk5-17.0_c3fe7857e55cbaefe20b8bffe82a517359bef7dc.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0-alpha2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="32ab8bede8cd600f25a5bb3fe15068c81c8910dc">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.0.0-alpha2_fd300f5b313af1d4b18d1e22f9c33637da645a43.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/exploded-aar/com.android.support/support-v13/24.0.0-alpha2/jars/libs/internal_impl-24.0.0-alpha2.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="714f2c40032949ccd750f4d5511d56bdfc011d4c">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/internal_impl-24.0.0-alpha2_fd614d2923b572d16e30421094b7d7ae68eb842d.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/jsr305-1.3.9_a1784358326c0a350d15d4f40b84ca03332bb3df.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty/servlet-api/2.5-20081211/22bff70037e1e6fa7e6413149489552ee2064702/servlet-api-2.5-20081211.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="22bff70037e1e6fa7e6413149489552ee2064702">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/servlet-api-2.5-20081211_b381d780ee1672d30f72c3fe5245eb977e3a48b5.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-gson/1.19.1/d6e68bb8d37c6b8608d5ac2dec331fad41eda9e/google-api-client-gson-1.19.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0d6e68bb8d37c6b8608d5ac2dec331fad41eda9e">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-api-client-gson-1.19.1_cdefc87e6f0d922d282e71258f4268733772378a.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.22.0/cc014d64ae11117e159d334c99d9c246d9b36f44/google-http-client-jackson2-1.22.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="cc014d64ae11117e159d334c99d9c246d9b36f44">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-http-client-jackson2-1.22.0_55b9282dab0fce75412ce58ac646deb8a5eba1ed.jar" />
+    </item>
+    <item
+        jar="/Users/PHUONGNGO/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.22.0/1d63f369ac78e4838a3197147012026e791008cb/google-oauth-client-1.22.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1d63f369ac78e4838a3197147012026e791008cb">
+        <dex dex="/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/platforms/android/build/intermediates/pre-dexed/debug/google-oauth-client-1.22.0_831bfe3960010ff58269f1e5ae4e91d306cb5892.jar" />
+    </item>
+
+</items>

@@ -1,0 +1,203 @@
+
+#custom-list-view
+, #custom-list-org-view
+, #custom-list-mygroups-view{
+	background: #efeff4;
+
+	.desc{
+		width: 100%;
+		padding: 15px 10px;
+		background: #fff;
+		line-height: 1.2em;
+	}
+
+	.menu-item{
+		height: 44px;
+		background: #fff;
+		border-bottom: solid 1px #ccc;
+		padding: 0px 10px;
+		cursor: pointer;
+		overflow: hidden;
+
+		.title{
+			text-align: center;
+			line-height: 46px;
+			font-size: 18px;
+			width: 80%;
+			margin: 0 auto;
+	        //Add "..."" to the overflow text
+	        overflow: hidden;
+	        text-overflow: ellipsis;
+	        white-space: nowrap;
+		}
+
+		.text-left{
+			width: 80%;
+			line-height: 46px;
+
+	        //Add "..."" to the overflow text
+	        overflow: hidden;
+	        text-overflow: ellipsis;
+	        white-space: nowrap;
+		}
+
+		.icon-right{
+			position: absolute;
+			top: 9px;
+			right: 0px;
+			color: #333;
+		}
+
+		.icon-right.big{
+			width: 60px !important;
+			height: 100% !important;
+			top: 0px !important;
+			padding-top: 9px !important;
+			text-align: right !important;
+		}
+
+		.text-center{
+			text-align: center;
+			width: 100%;
+			line-height: 46px;
+		}
+
+		.switch-right{
+			position: relative;
+			font-size: 30px;
+			top: -21px;
+			right: 12px;
+			float: right;
+		}
+		
+        
+        .circle-icon-wrapper{
+            display: inline-block;
+            position: relative;
+            margin-top: -10px;
+            margin-left: -5px;
+        }
+	}
+
+	.menu-item.border-top{
+		border-top: solid 1px #ccc;
+	}
+
+	.menu-item.no-border-bottom{
+		border-bottom: none !important;
+	}
+
+	.empty-space-item{
+		height: 35px;
+	}
+}
+
+
+
+#custom-list-org-view
+, #custom-list-mygroups-view{
+	overflow: hidden;
+
+	.menu-item{
+		.right-btn{
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			width: 40px;
+			height: 100%;
+			background: #fff;
+			text-align: center;
+			font-size: 20px;
+			line-height: 45px;
+			color: $p2-green-color;
+		}
+	}
+
+	.upper-area{
+		background: #efeff4;
+		height: 100px;
+		width: 100%;
+	}
+
+	.lower-area{
+		position: absolute;
+		height: 100%;
+		padding-top: 100px;
+		width: 100%;
+		overflow: hidden;
+		overflow-y: scroll;
+		overflow-x: hidden;
+
+		.wrapper{
+			height: 100%;
+			width: 100%;
+			overflow-y: scroll;
+			overflow-x: hidden;
+
+			.item-list{
+				position: relative;
+				height: 40px;
+				width: 100%;
+				border-bottom: solid 1px #ccc;
+				line-height: 44px;
+				background: white;
+
+				.icon-wrapper{
+					position: absolute;
+					top: 0px;
+					left: 0px;
+					height: 100%;
+					width: auto;
+					text-align: center;
+					font-size: 18px;
+					padding-left: 10px;
+					line-height: 42px;
+				}
+
+				.name-wrapper {
+					position: absolute;
+					top: 0px;
+					left: 50px;
+					height: 100%;
+					width: 100%;
+					padding-right: 55px;
+				}
+			}
+		}
+	}
+
+	/* For Search interface */
+    .search-box{
+        background: #efeff4;
+        height: 100px;
+        width: 100%;
+        height: 56px;
+        width: 100%;
+        padding: 0 10px;
+        padding-top: 10px;
+        border-bottom: solid 1px #ccc;
+
+        .field{
+
+            .input{
+                padding-right: 34px;
+            }
+
+            .icon-wrapper{
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                width: 35px;
+                height: 100%;
+                text-align: center;
+                line-height: 38px;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+                color: #bbb;
+                cursor: pointer;
+            }
+        }
+
+    }
+
+}
