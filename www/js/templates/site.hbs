@@ -1,0 +1,99 @@
+<div id="noti-box" style="z-index:999998;"></div>
+<div id="loading-overlay" class="loading-overlay" style="z-index:999999; display:none;"></div>
+<div id="inner-container" class="row inner-container">
+    <div class="sidebar-container" id="sidebar-container">
+    </div>
+    <div class="outer-page-container row" id="outer-page-container">
+        <div class="page-container" id="page-container">
+            <div id="main-container">
+            </div>
+        </div>
+    </div>
+    <div id="footer" class="footer-container" id="footer-container">
+        <footer class="row footer-navbar">
+            <ul id="footer-toolbar" class="toolbar-nav">
+                <li id="home-tool" class="active">
+                    <div>
+                        <div class="toolbar-nav-icon"><i class="p2-home"></i>
+                        </div>
+                        <div class="toolbar-nav-label">Home</div>
+                    </div>
+                </li>
+                <li id="calendar-tool" class="">
+                    <!--div class="noti-icon hidden">0</div-->
+                    <div>
+                        <div class="toolbar-nav-icon"><i class="p2-calendar noti-badge"></i><span id="calendar-noti-badge" class="noti-badge"></span>
+                        </div>
+                        <div class="toolbar-nav-label">Schedule</div>
+                    </div>
+                </li>
+                <li id="messages-tool" class="">
+                    <div>
+                        <div class="toolbar-nav-icon"><i class="p2-message-i"></i><span id="messages-noti-badge" class="noti-badge"></span>
+                        </div>
+                        <div class="toolbar-nav-label">Messages</div>
+                    </div>
+                </li>
+                <li id="homework-tool">
+                    <div>
+                        <div class="toolbar-nav-icon"><i class="p2-homework"></i><span id="homework-noti-badge" class="noti-badge"></span>
+                        </div>
+                        <div class="toolbar-nav-label">Homework</div>
+                    </div>
+                </li>
+                <li id="contacts-tool">
+                    <div>
+                        <div class="toolbar-nav-icon"><i class="p2-contact"></i>
+                        </div>
+                        <div class="toolbar-nav-label">Contacts</div>
+                    </div>
+                </li>
+            </ul>
+        </footer>
+    </div>
+    <div id="foreground-container"></div>
+    <div id="spinner-container" class="hidden">
+        <div class="background hidden"></div>
+        <div class="inner-container">
+            <div id="mid-spinner" class="spinner-wrapper text-center"></div>
+        </div>
+    </div>
+    <div class="row slidingalert animated fadeOutUp">
+        <div class="twelve columns">
+            <div class="field text-center">
+                <div id="alert-container">
+                    <div id="sliding-alert" class="sliding alert">
+                        <div class="closebtn"><i class="icon-cancel"></i></div>
+                        <div id="alert-msg">Now is the time for all good men to come to the rescue</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row slidingconfirm">
+        <div class="twelve columns">
+            <div class="field text-center">
+                <div id="confirm-container">
+                    <div id="sliding-confirm" class="sliding confirm">
+                        <div class="closebtn"><i class="icon-cancel"></i></div>
+                        <div id="confirm-msg">Now is the time for all good men to come to the rescue</div>
+                        <div id="confirm-btns" class="group-btn"><span id="confirm-cancel">Cancel</span><span id="confirm-ok">OK</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row slidingYesNo">
+        <div class="twelve columns">
+            <div class="field text-center">
+                <div id="confirm-container">
+                    <div id="sliding-yesno" class="sliding confirm">
+                        <div class="closebtn"><i class="icon-cancel"></i></div>
+                        <div id="yesno-msg">Yes or No</div>
+                        <div id="yesno-btns" class="group-btn"><span id="yesno-yes">Yes</span><span id="yesno-no">No</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,143 @@
+<div class="navbar">
+    <div id="navbarBtnsWrapper">
+        <div id="backBtn" class="left-menu text">Back</div>
+        <div class="mid-menu">
+            <div class="icon center-icon-menu" style="margin-top:5px;"></div>
+        </div>
+        <div id="editBtn" class="right-menu text hidden">Edit</div>
+    </div>
+    <div id="navbarEditBtnsWrapper">
+        <div id="doneBtn" class="left-menu text">Done</div>
+        <div class="mid-menu">
+            <div class="icon center-icon-menu" style="margin-top:5px;"></div>
+        </div>
+        <div id="cancelBtn" class="right-menu text">Cancel</div>
+    </div>
+</div>
+<div class="view-container" style="-webkit-user-select: auto !important; overflow: scroll !important;">
+    <div id="spinner" class="spinner-wrapper text-center"></div>
+    <div id="creator-detail" class="message-detail hidden">
+        <div class="subtitle">Created By</div>
+        <div id="sender"></div>
+        <div class="action-wrapper">
+            <a id="phoneto" href="javascript:void(0);"><i class="icon-fontello-phone"></i></a> 
+            <a id="emailto" href="javascript:void(0);"><i class="icon-fontello-email"></i></a>
+            <a id="smsto" {{!-- href="sms://{{contact.mobilePhone}}" --}}><i class="icon-fontello-comment"></i></a>
+        </div>
+    </div>
+    <div id="event-detail" class="message-detail hidden">
+        <div id="title" class="title"></div>
+        <div id="starts"></div>
+        <div id="location"><a id="maplink" class="active-link"></a></div>
+    </div>
+    <div id="message-detail" class="message-detail hidden">
+        <div class="subtitle">Notes</div>
+        <div id="message"></div>
+    </div>
+    <div id="repeat-detail" class="message-detail hidden">
+        <div class="subtitle">Repeats</div>
+        <div id="reminder-repeat" class="reminder-note" style="padding-right:30px;"></div>
+    </div>
+    <div id="until" class="create-menu-item hidden">
+        <div class="subtitle">Repeat Until</div>
+        {{#if mobile}}
+        <div id="repeat-until" class="right-text">Touch ...</div>
+        {{else}}
+        <div class="right-arrow" style="width:80%;">
+            <div id="repeat-until-field" class="field" style="width: 100%; padding-right: 10px;">
+                <input id="repeat-until" class="input text-field" style="width: 13%; top: -2px;" type="text" placeholder="MM/DD/YY" />
+                <i class="icon-calendar"></i>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+    <div id="reminder-detail" class="message-detail hidden">
+        <div class="subtitle">Reminder</div>
+        <div id="reminder-reminder" class="reminder-note">
+            <span class="reminder-val">Never</span>
+            <i class="icon-right-open"></i>
+        </div>
+    </div>
+    <div id="reminder2-detail" class="message-detail">
+        <div class="subtitle">Second Reminder</div>
+        <div id="reminder-reminder2" class="reminder-note">
+            <span class="reminder-val">Never</span>
+            <i class="icon-right-open"></i>
+        </div>
+    </div>
+    <div id="calendar-picker" class="time-picker hidden">
+        <div class="bg"></div>
+        <div class="box-wrapper">
+            <div class="title-wrapper">Calendars</div>
+            <div id="calendar-picker-list" class="time-wrapper">
+            </div>
+        </div>
+    </div>
+    <div id="remind-picker" class="time-picker hidden">
+        <div class="bg"></div>
+        <div class="box-wrapper">
+            <div class="title-wrapper">Reminder</div>
+            <div class="time-wrapper">
+                <div id="remind-0" class="time">
+                    <span>Never</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-1" class="time">
+                    <span>At Time of Event</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-2" class="time">
+                    <span>5 Minutes Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-3" class="time">
+                    <span>10 Minutes Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-4" class="time">
+                    <span>15 Minutes Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-5" class="time">
+                    <span>30 Minutes Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-6" class="time">
+                    <span>1 Hour Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-7" class="time">
+                    <span>2 Hours Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-8" class="time">
+                    <span>4 Hours Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-9" class="time">
+                    <span>1 Day Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-10" class="time">
+                    <span>2 Days Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+                <div id="remind-11" class="time" style="border-bottom: none;">
+                    <span>1 Week Before</span>
+                    <div class="checked hidden"><i class="icon-fontello-ok"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="calendar-detail" class="message-detail hidden">
+        <div class="subtitle">Calendar</div>
+        <div id="reminder-calendar" class="reminder-note">
+            {{#if mobile}}
+                <span id="addToCalendar" class="reminder-val">Add to</span>
+                <i class="icon-right-open"></i>
+            {{else}}
+                <span>Add to<i class="icon-calendar"></i></span>
+            {{/if}}
+        </div>
+    </div>
+</div>

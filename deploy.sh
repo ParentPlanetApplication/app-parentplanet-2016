@@ -2,7 +2,7 @@
 
 ### Change path platform browser on your project
 
-SRC=BROWSE_PLATFORM_DIR
+SRC=/Users/PHUONGNGO/MyProjects/vinasource/parentplanet/Cordova_v4/ParentPlanet/www
 DEST=.
 
 ###### Function
