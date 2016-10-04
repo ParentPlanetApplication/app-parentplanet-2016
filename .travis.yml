@@ -1,0 +1,10 @@
+deploy:
+  provider: heroku
+  api_key:
+    secure: ZX0/k2uSME7hv40oRYBqU9Dc3YcJ+iDZqe20MZpgeDzG6BW/yjqHJi2RjuLA530RsD2WcGur/XUto7JQe3UhL9S1xOgi8ODkoz9PF8tmImc1tNfLMomrlRSAXn3K42xkuolRrvykTQmxftMDjNfQEGrdOx01MbFxpZnLJTHZTafF8VmWgwkID43ZSADhQ7SGsNnGxDxBoYshP4NuOGv++yhwtxMG2EBzsWVR1+ukNbSQnDmnqSaIqRUL+rogm/t++h1cVm226nXHSzK2QOLJqw31vL5Wzm7q2e3jlPjoCoQkEKypA86imrLDBtxoSyje+9gdbMhwus1WAjvE7MiVhlA+op5sQTz4UaQqXYwzVf8XG90kuE+ADyypMsG5Qkx28CW8iqAwaqJvTCEzngT3+bLNlJN6QKhKJTJfnJb0GcGd26aCoZqsGZVUtEBl0PVlP3vk3uqpfJ1ESakbGMciifA9uj3RPpSGcYt11m/2mxtpXaRxGW+UVuDuHbOsxM6Sw4Np3IBZo5FI5XcU3lGoXbAEwI4z8OuM4r+JZLl2odeCSu+bc1w00NciUgzF20NrS2kTzGGPKMc4Blnbhzlavf4v6hs/GLW2ZDF7SS0CHuIikiPlcxj/cRiJ0WdimxOLM48EE9+E5OnRgdPn9VZdfWKy0Ka2bQNxaSHL6osIdkU=
+  app: app-parentplanet-2016
+  on:
+    repo: ParentPlanetApplication/app-parentplanet-2016
+    branch: heroku
+  run:
+    - "which seq"
