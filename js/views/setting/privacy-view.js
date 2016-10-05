@@ -2,15 +2,25 @@ define([
     'chaplin',
     'views/base/view',
     'text!templates/setting/privacy-view.hbs',
-    'jquery'
-
-], function(Chaplin, View, Template, $) {
+    'jquery',
+    'parse'
+], function(Chaplin, View, Template, $, Parse) {
     'use strict';
 
     var addedToDOM = function() {
-        $("#backBtn").on('click', function (e) {
+      $("#backBtn").on('click', function (e) {
         _goToSettingPage(Chaplin);
       });
+
+        // hide buttom bar if use null
+        var user = Parse.User.current();
+        if(user == null){
+            $("#footer").hide();
+            $("#privacy-view").css('padding-bottom','0px');
+        } else {
+            $("#footer").show();
+            $("#privacy-view").css('padding-bottom','');
+        }
     }; //eo addedToDOM
 
     var View = View.extend({

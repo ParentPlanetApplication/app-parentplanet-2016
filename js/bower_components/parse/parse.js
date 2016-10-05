@@ -6311,6 +6311,7 @@ var ParsePromise = (function () {
             try {
               results = [resolvedCallback.apply(this, results)];
             } catch (e) {
+              console.log(e.code + ' => ' + e.message);
               results = [ParsePromise.error(e)];
             }
           } else {
@@ -6335,6 +6336,7 @@ var ParsePromise = (function () {
             try {
               result = [rejectedCallback(error)];
             } catch (e) {
+              console.log(e.code + ' => ' + e.message);
               result = [ParsePromise.error(e)];
             }
           } else {
@@ -6481,6 +6483,7 @@ var ParsePromise = (function () {
         }
         // By explicitly returning a rejected Promise, this will work with
         // either jQuery or Promises/A+ semantics.
+        console.log(error.code + ' => ' + error.message);
         return ParsePromise.error(error);
       });
     }

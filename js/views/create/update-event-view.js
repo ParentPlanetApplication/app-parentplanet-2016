@@ -433,7 +433,7 @@ define(
 
             var selectedCustomList = function(eventType) {
                 var UserCustomList = Parse.Object.extend("UserCustomList", {}, {
-                    query: function() {
+                query: function() {
                         return new Parse.Query(this.className);
                     }
                 });
@@ -443,15 +443,13 @@ define(
                 query.equalTo("objectId", _selectedCustomListId);
                 query.find({
                     success: function(results) {
-                        console.log(results);
                         if (results.length != 0) {
                             var userCustomListData = results[0];
                             var selectedCustomListData = userCustomListData.attributes;
-                            console.log(selectedCustomListData);
-                            console.log(selectedCustomListData.nonUserContactEmail.length);
-                            console.log(selectedCustomListData.userContactId.length);
-                            console.log(selectedCustomListData.userContactEmail.length);
-                            if (selectedCustomListData.nonUserContactEmail.length > 0 || selectedCustomListData.userContactId.length > 0 || selectedCustomListData.userContactEmail.length > 0) {
+
+                            if (selectedCustomListData.nonUserContactEmail.length > 0
+                            || selectedCustomListData.userContactId.length > 0
+                            || selectedCustomListData.userContactEmail.length > 0) {
                                 //alert("Please wait for the cloud code component to be finished in order to send messages to non-existing contacts.");
                                 spinner.show();
                                 var data = {
@@ -470,27 +468,29 @@ define(
                                 var allEmailArray = nonUserContactEmail.concat(userContactEmail);
                                 //var data = {"allDay":true,"end":"Thurs","location":"617 Memak Road","note":"too fun","repeat":"monthly","start":"Wed","title":"Test 1"};
                                 //Create new Email object on parse to trigger cloud code
+
                                 var Email = Parse.Object.extend("Email");
                                 var email = new Email();
                                 email.set("type", eventType);
                                 email.set("recipientAddress", allEmailArray);
                                 email.set("data", data);
-                                email.set("customListId", selectedCustomListData.objectId);
+                                email.set("customListId", userCustomListData.id);
                                 email.set("customListName", selectedCustomListData.name);
                                 email.set("groupId", selectedCustomListData.groupId);
                                 email.set("organizationId", selectedCustomListData.organizationId);
+
+                                email.save(null, {
+                                    success: function(email) {
+                                        console.log(email);
+                                    },
+                                    error: function(email, error) {
+                                        // Execute any logic that should take place if the save fails.
+                                        // error is a Parse.Error with an error code and message.
+                                        spinner.hide();
+                                        alert('Failed to send emails, with error: ' + error.message);
+                                    }
+                                });
                             }
-                            email.save(null, {
-                                success: function(email) {
-                                    console.log(email);
-                                },
-                                error: function(email, error) {
-                                    // Execute any logic that should take place if the save fails.
-                                    // error is a Parse.Error with an error code and message.
-                                    spinner.hide();
-                                    alert('Failed to send emails, with error: ' + error.message);
-                                }
-                            });
                         }
                     },
                     error: function(err) {}
