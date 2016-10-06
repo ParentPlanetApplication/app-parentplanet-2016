@@ -1,1 +1,4 @@
-<?php include_once("home.html"); ?>
+<?php
+  chdir('./Cordova_v4/ParentPlanet/platforms/browser/www');
+  include_once("index.html"); 
+?>
