@@ -31,6 +31,7 @@ requirejs.config({ // Configure the AMD module loader
         'calendarAutoSync': 'services/calendarAutoSync',
         'eventService': 'services/eventService',
         'userService': 'services/userService',
+        'groupService': 'services/groupService/groupService',
         'localStorageService': 'services/localStorageService',
         'rrule': 'bower_components/rrule/lib/rrule', //load in normally for now, don't use requirejs
         'nlp': 'bower_components/rrule/lib/nlp',

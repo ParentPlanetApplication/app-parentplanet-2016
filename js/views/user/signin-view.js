@@ -35,6 +35,11 @@ define(
             var user;
             var isChecked;
             var timeout = null; //to debounce login button
+
+            var getUserName = function () {
+                return $("#usernameForm").val().toLowerCase();
+            }
+
             var saveCheckBox = function() {
                 //Save checkbox
                 var user = _getUserData(); //get user from local storage
@@ -46,7 +51,7 @@ define(
                 };
                 isChecked = false;
                 if ($('.remember-me > .checkbox').hasClass("checked")) {
-                    usernamePassword($("#usernameForm").val(), $("#passwordForm").val(), true);
+                    usernamePassword(getUserName(), $("#passwordForm").val(), true);
                     isChecked = true;
                 } else {
                     usernamePassword('', '', false);
@@ -72,7 +77,7 @@ define(
                 user.isRemember ? setUsernamePassword(user.username, user.password, 'gumby.check') : setUsernamePassword('', '', 'gumby.uncheck');
             }; //eo initIsRemember
             var resetClick = function(e) {
-                var username = $("#usernameForm").val();
+                var username = getUserName();
 
                 function noUserName() {
                     _alert("Please enter an email address for the username.");
@@ -107,7 +112,7 @@ define(
                 }, DEFAULT_ANIMATION_DELAY);
             }; //eo signupClick
             var loginClick = function(e) {
-                var username = $("#usernameForm").val();
+                var username = getUserName();
                 var password = $("#passwordForm").val();
                 var isChecked = $('.remember-me > .checkbox').hasClass("checked");
                 var deferred = null;

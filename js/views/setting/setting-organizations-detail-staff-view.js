@@ -223,9 +223,13 @@ define( [
 		var spinner = _createSpinner( 'spinner' );
 		query.find( {
 			success: function ( results ) {
-				var relation = results[ 0 ];
+			    var relation = results[0];
+			    var relationId = relation.get("userId");
+			    console.log(relationId);
+			    removeOrganizationAdminIdList(relationId);
+			  
 				relation.destroy( {
-					success: function ( relation ) {
+				    success: function (relation) {
 						deleteUserCustomLists( staffId );
 						deleteFromAdminIdList( staffId );
 						// The object was deleted from the Parse Cloud.
@@ -603,26 +607,7 @@ define( [
 			} );
 		}; //eo addOrganizationAdminIdList
 
-		var removeOrganizationAdminIdList = function ( relationId ) {
-			var Organization = Parse.Object.extend( "Organization", {}, {
-				query: function () {
-					return new Parse.Query( this.className );
-				}
-			} );
-			var query = Organization.query();
-			query.equalTo( "objectId", selectedOrgId );
-			query.find( {
-				success: function ( results ) {
-					$.each( results, function ( i, org ) {
-						org.remove( "adminIdList", relationId );
-						org.save();
-					} );
-				},
-				error: function ( error ) {
-					console.log( 'Error: ' + JSON.stringify( error ) );
-				}
-			} );
-		}; //eo removeOrganizationAdminIdList
+
 
 		var createRecipientList = function ( groupId, groupType, name, relationId ) {
 			var recipientList = [];
@@ -783,6 +768,27 @@ define( [
 			} );
 		}; //eo createUserCustomList
 	}; //eo initSearch
+
+	var removeOrganizationAdminIdList = function (relationId) {
+	    var Organization = Parse.Object.extend("Organization", {}, {
+	        query: function () {
+	            return new Parse.Query(this.className);
+	        }
+	    });
+	    var query = Organization.query();
+	    query.equalTo("objectId", selectedOrgId);
+	    query.find({
+	        success: function (results) {
+	            $.each(results, function (i, org) {
+	                org.remove("adminIdList", relationId);
+	                org.save();
+	            });
+	        },
+	        error: function (error) {
+	            console.log('Error: ' + JSON.stringify(error));
+	        }
+	    });
+	}; //eo removeOrganizationAdminIdList
 	var redirect = function () {
 		Chaplin.utils.redirectTo( {
 			name: 'setting-organizations-detail'

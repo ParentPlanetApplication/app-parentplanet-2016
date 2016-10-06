@@ -684,10 +684,10 @@ var _setUserLocalNotification = function(d, cancel) { //d:data obj, start:date
 }; //eo _setUserLocalNotification
 
 var _syncEventLocalNotifications = function(events) {
-    window.plugin.notification.local.getScheduledIds(function (ids) {
+    window.plugin.notification.local.getScheduledIds(function(ids) {
         window.plugin.notification.local.cancel(ids, function() {
             console.log("Cancelled all scheduled notifications");
-            
+
             var localItems = [];
             var bulidParams = function(events) {
                 var params = [];
@@ -821,7 +821,7 @@ var _syncEventLocalNotifications = function(events) {
             var notifParams = bulidParams(eventsToRegister);
             schedule(notifParams);
             _setUserReminders(localItems);
-            
+
         });
     });
 }; //eo _setEventLocalNotification
@@ -2350,13 +2350,15 @@ var _showColorPicker = function(parent, target) {
 
     // show pp
     var pTop = $("#main-content-inner").position().top;
-    if (pTop < 0) {
+    if (pTop < 0 && $("#color-picker").offset().top < 0) {
         var h = $("#color-picker").height();
         var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
         var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
         var top = ((height / 2) - (h / 2)) + dualScreenTop;
-
+        //alert($("#color-picker").offset().top);
         $('#color-picker').offset({ top: top });
+    } else {
+        $('#color-picker').offset({ top: 45 });
     }
 
     $(".cp-bg").on("click", function(e) {
@@ -4201,3 +4203,7 @@ function _createNativeEvent(event, calendarToSync) { //these are js Date objects
 
     return deferred;
 }
+
+var _inheritsFrom = function(child, parent) {
+    child.prototype = Object.create(parent.prototype);
+};
