@@ -6,7 +6,10 @@ define([
 
     var User = Model.extend({
         defaults: {
-          ModeServer: MODESERVER
+          ModeServer: MODESERVER,
+          BuildDate: BUILDDATE,
+          AndroidBuild: ANDROID,
+          WebBuild: WEBAPP
         }
 
     });

@@ -4207,3 +4207,39 @@ function _createNativeEvent(event, calendarToSync) { //these are js Date objects
 var _inheritsFrom = function(child, parent) {
     child.prototype = Object.create(parent.prototype);
 };
+
+
+var _isSuperAnim = function() {
+  var user = JSON.parse(localStorage.getItem("user"));
+  return user.isAdmin;
+}
+
+var _isOrganizationAdmin = function() {
+  var user = JSON.parse(localStorage.getItem("user"));
+  var permission = user.setting.permissonOfSelectedOrg.toLowerCase();
+  return permission === 'admin' || permission == 'faculty';
+}
+
+var _isClassParent = function() {
+  var user = JSON.parse(localStorage.getItem("user"));
+  var permission = user.setting.permissonOfSelectedOrg.toLowerCase();
+  return permission === 'class parent';
+}
+
+var _isNurse = function() {
+  var user = JSON.parse(localStorage.getItem("user"));
+  var permission = user.setting.permissonOfSelectedOrg.toLowerCase();
+  return permission === 'nurse';
+}
+
+var _isFaculty = function() {
+  var user = JSON.parse(localStorage.getItem("user"));
+  var permission = user.setting.permissonOfSelectedOrg.toLowerCase();
+  return permission === 'faculty';
+}
+
+var _isTeacher = function() {
+  var user = JSON.parse(localStorage.getItem("user"));
+  var permission = user.setting.permissonOfSelectedOrg.toLowerCase();
+  return permission === 'teacher';
+}
