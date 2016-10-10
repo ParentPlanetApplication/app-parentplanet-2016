@@ -11,7 +11,7 @@ define(
         var addedToDOM = function() {
             //When users touches 'signup' button
             $("#nextBtn, #backBtn").click(function(e){
-                Chaplin.utils.redirectTo({    name: ''    });
+                Chaplin.utils.redirectTo({    name: 'signin'    });
             })
         };
         var UserView = View.extend({
