@@ -105,7 +105,7 @@ define(
                 enterUserInfo(done); //back to login
             }); //eo touch next
             touch.$("#backBtn").on('click', function(e) {
-                redirect();
+                redirect('signup');
             });
             //scroll up fields to view from behind keyboard
             $("#homePhone").focus(function(e) { scrollFieldTop(600); }); //eo #homePhone .focus

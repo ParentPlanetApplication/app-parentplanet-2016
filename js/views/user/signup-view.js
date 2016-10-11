@@ -18,6 +18,10 @@ define(
 			}
 			//when the DOM has been updated let gumby reinitialize UI modules
 		var addedToDOM = function () {
+			var signUpEmail =_signupEmail;
+			if(signUpEmail!=undefined && signUpEmail!=''){
+				$( "#emailForm" ).val(signUpEmail);
+			}
 			//When users touches 'signup' button
 			touch.$( "#nextBtn" ).on( 'click', function ( e ) {
 				//Load Data

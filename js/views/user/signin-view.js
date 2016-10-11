@@ -105,6 +105,7 @@ define(
                 $(this).addClass("bg-highlight-grey");
                 $(this).css("color", "white");
                 _hasNetworkConnection = true;
+                _signupEmail='';
                 setTimeout(function() {
                     Chaplin.utils.redirectTo({
                         name: 'signup'
