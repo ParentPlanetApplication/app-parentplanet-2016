@@ -71,6 +71,8 @@ define([
                         childId = relation.get('userId');
                         activityId = _activityId(organizationId, childId);
                         attributes = _getUserActivitiesItem(activityId);
+                        console.log(activityId);
+                        console.log(attributes);
 
                         watchingGroup = localStorageService.getWatchingGroupById(relation.id);
                         if (!watchingGroup) {
@@ -159,56 +161,81 @@ define([
             });
         };
 
-        for (var i = 0; i < groupData.adminIdList.length; i++) {
-            admin = groupData.adminIdList[i];
-            if (userIdArray.indexOf(admin) == -1) {
-                userIdArray.push(admin);
-            }
-        }
-        var query = new Parse.Query(Parse.User);
-        query.containedIn("objectId", userIdArray);
-        query.ascending("firstName");
-        query.find({
-            success: function(results) {
-                for (var i = 0; i < results.length; i++) {
-                    var staff = results[i];
-                    //Load staff contact info
-                    var actionWrapperContent = "";
-                    var mobilePhone, email;
-                    //Get admin's phone number, only need one here
-                    if (staff.get("workPhone") != "" && staff.get("workPhone") != null) {
-                        mobilePhone = staff.get("workPhone");
-                    } else if (staff.get("mobilePhone") != "" && staff.get("mobilePhone") != null) {
-                        mobilePhone = staff.get("mobilePhone");
-                    } else if (staff.get("homePhone") != "" && staff.get("homePhone") != null) {
-                        mobilePhone = staff.get("homePhone");
-                    }
-                    //Get admin's email
-                    if (staff.get("email") != "" && staff.get("email") != null) {
-                        email = staff.get("email");
-                    }
-                    if (mobilePhone != "" && mobilePhone != null) {
-                        actionWrapperContent = '<a href="tel:' + mobilePhone + '"><i class="icon-fontello-phone"></i></a>' + '<a href="sms:' + mobilePhone + '"><i class="icon-fontello-comment"></i></a>';
-                    }
-                    if (email != "" && email != null) {
-                        actionWrapperContent = actionWrapperContent + '<a href="mailto:' + email + '"><i class="icon-fontello-email"></i></a>';
-                    }
-                    actionWrapperContent = actionWrapperContent + '<span style="position: relative; width: 10px; height: 1px;"></span>';
-                    //Load staff data
-                    $("#main-content").append('<div class="big-menu-item hidden">  \
-                        <div class="position">' + groupData.adminJsonList[staff.id] + '</div> \
-                        <div class="name">' + staff.get("firstName") + ' ' + staff.get("lastName") + '</div>   \
-                        <div class="action-wrapper">' + actionWrapperContent + '</div>  \
-                    </div>');
-                }
+        var loadGroupAdmin = function() {
+          var query = new Parse.Query(Parse.User);
+          query.containedIn("objectId", userIdArray);
+          query.ascending("firstName");
+          query.find({
+              success: function(results) {
+                  for (var i = 0; i < results.length; i++) {
+                      var staff = results[i];
+                      //Load staff contact info
+                      var actionWrapperContent = "";
+                      var mobilePhone, email;
+                      //Get admin's phone number, only need one here
+                      if (staff.get("workPhone") != "" && staff.get("workPhone") != null) {
+                          mobilePhone = staff.get("workPhone");
+                      } else if (staff.get("mobilePhone") != "" && staff.get("mobilePhone") != null) {
+                          mobilePhone = staff.get("mobilePhone");
+                      } else if (staff.get("homePhone") != "" && staff.get("homePhone") != null) {
+                          mobilePhone = staff.get("homePhone");
+                      }
+                      //Get admin's email
+                      if (staff.get("email") != "" && staff.get("email") != null) {
+                          email = staff.get("email");
+                      }
+                      if (mobilePhone != "" && mobilePhone != null) {
+                          actionWrapperContent = '<a href="tel:' + mobilePhone + '"><i class="icon-fontello-phone"></i></a>' + '<a href="sms:' + mobilePhone + '"><i class="icon-fontello-comment"></i></a>';
+                      }
+                      if (email != "" && email != null) {
+                          actionWrapperContent = actionWrapperContent + '<a href="mailto:' + email + '"><i class="icon-fontello-email"></i></a>';
+                      }
+                      actionWrapperContent = actionWrapperContent + '<span style="position: relative; width: 10px; height: 1px;"></span>';
+                      //Load staff data
+                      $("#main-content").append('<div class="big-menu-item hidden">  \
+                          <div class="position">' + groupData.adminJsonList[staff.id] + '</div> \
+                          <div class="name">' + staff.get("firstName") + ' ' + staff.get("lastName") + '</div>   \
+                          <div class="action-wrapper">' + actionWrapperContent + '</div>  \
+                      </div>');
+                  }
 
-                userChild();
-            },
-            error: function(error) {
-                console.log(error);
-                spinner.stop();
-            }
-        }); //eo query.find user data
+                  userChild();
+              },
+              error: function(error) {
+                  console.log(error);
+                  spinner.stop();
+              }
+          }); //eo query.find user data
+
+        }
+        var query;
+        var UserOrganizationGroupRelation = Parse.Object.extend("UserOrganizationGroupRelation", {}, {
+          query: function(){
+            return new Parse.Query(this.className);
+          }
+        });
+
+        query = UserOrganizationGroupRelation.query();
+        query.equalTo('organizationGroupId', selectedOrgId);
+        query.equalTo('relationType', 'staff');
+        query.select('userId', 'position')
+        query.ascending('firstName', 'lastName');
+        console.log(query);
+        query.find({
+          success: function(results) {
+            userIdArray = [];
+            groupData.adminJsonList = [];
+            $.each(results, function(i, item) {
+              userIdArray.push(item.get('userId'));
+              groupData.adminJsonList[item.get('userId')] = item.get('position');
+            });
+            loadGroupAdmin();
+          },
+          error: function(error) {
+            console.log('Error while get userId');
+            console.log(error);
+          }
+        })
     }; //eo loadActivityDetail
     var addedToDOM = function() {
         initData().then(function() {
