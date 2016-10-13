@@ -168,10 +168,9 @@ var _onBackgroundFetch = function(callback, immediate, allAvailable, Chaplin, De
                     var eventAtt = event.attributes;
                     
                     var localEvent = localEvents.find(function(e) {
-                        e.objectId == event.id;
+                        return e.objectId == event.id;
                     });
                     
-                    //var localEvent = _getUserEventsItem(event.id);
                     var checkReminder = function() {
                         if (localEvent.reminder != eventAtt.reminder) {
                             event.set("reminder", localEvent.reminder);
