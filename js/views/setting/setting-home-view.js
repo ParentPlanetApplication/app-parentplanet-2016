@@ -15,6 +15,9 @@ define([
         //Clear catch
         user.setting.permissonOfSelectedOrg = '';   //Clear permission
         _setUserData(user);
+        if ( MODESERVER.toLowerCase() === 'production' ) {
+          $('#build-info').hide();
+        }
     };
     var initPermission = function() {
         user.isAdmin ? $("#addNewOrganizationBtn").removeClass("hidden") : $.noop();

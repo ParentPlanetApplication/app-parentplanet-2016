@@ -239,7 +239,7 @@ define( [
 					userIdArray.push( item.get( 'userId' ) );
 					groupData.adminJsonList[ item.get( 'userId' ) ] = item.get( 'position' );
 				} );
-        
+
 				loadGroupAdmin();
 			},
 			error: function ( error ) {
