@@ -21,7 +21,7 @@
     <allow-navigation href="http://*/*" />
     <allow-navigation href="https://*/*" />
     <allow-navigation href="data:*" />
-    <hook src="scripts/appAfterBuild.js" type="after_build" />
+    <hook src="scripts/appAfterBuild.js" type="before_prepare" />
     <preference name="ShowSplashScreen" value="false" />
     <preference name="ShowSplashScreenSpinner" value="false" />
 </widget>

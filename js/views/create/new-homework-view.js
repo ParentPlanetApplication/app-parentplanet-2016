@@ -485,13 +485,10 @@ define(
                      */
                     o = {
                         where: queryIOS,
-                        data: { //note: the alert title MUST contain the word 'homework'
-                            //alert: "New homework: " + title.substring(0, 80) + "...",
-                            alert: "New homework: " + title.substring(0, 200),
+                        data: { //note: for homework push, it should not make sound or alert for the user
                             badge: 1,
                             type: _Homework_Type,
-                            sound: "default",
-                            'content-available': 1, //Request clients to trigger background fetch
+                            sound: "",
                             sender: user.id,
                             objectId: homeworkId
                         }

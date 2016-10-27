@@ -41,6 +41,8 @@ define([
     'views/setting/setting-organizations-groups-detail-groupadmin-view',
     'views/setting/setting-organizations-groups-detail-groupadmin-add-view',
     'views/setting/setting-organizations-groups-detail-groupadmin-add-fromorg-view',
+    'views/setting/setting-organizations-groups-detail-groupclassparent-view',
+    'views/setting/setting-organizations-groups-detail-groupclassparent-add-fromorg-view',
     'views/setting/setting-organizations-detail-qrcode-view',
     'views/setting/setting-organizations-detail-edit-view',
     'views/setting/setting-organizations-detail-staff-view',
@@ -67,7 +69,10 @@ define([
     'views/setting/setting-mygroups-detail-contacts-add-byid-view',
     'views/setting/setting-mygroups-detail-groupadmin-view',
 
-], function(Controller, Model, UserModel, SettingHomeView, UserHomeView, UserContactPermissionsView, UserDefaultListView, UserAccessHomeView, UserAccessDetailView, UserAccessAddView, UserActivitiesHomeView, UserActivitiesListView, UserActivitiesDetailView, UserActivitiesDetailContactPermissionsView, UserKidsHomeView, UserKidsDetailView, UserKidsAddNewView, AddNewActivityHomeView, AddNewActivityQrCodeHomeView, AddNewActivityQrCodeScanView, AddNewActivityEnterCodeView, AddNewActivityDoneView, UserContactInfoView, OrganizationsAddView, OrganizationsHomeView, OrganizationDetailView, OrganizationGroupsListView, OrganizationGroupsAddView, OrganizationGroupsDetailView, OrganizationGroupsDetailEditView, OrganizationGroupsDetailStudentsView, OrganizationGroupsDetailStudentsAddView, OrganizationGroupsDetailStudentsAddByIdView, /*OrganizationGroupsDetailStudentsAddByNameView, */OrganizationGroupsDetailStudentsAddByNameEmailView, OrganizationGroupsDetailStudentsAddByNameMobileView, OrganizationGroupsDetailStudentsAddOrganizationView, OrganizationGroupsDetailStudentsAddOrganizationIndividualView, OrganizationGroupsDetailQrCodeView, OrganizationGroupsDetailGroupAdminView, OrganizationGroupsDetailGroupAdminAddView, OrganizationGroupsDetailGroupAdminAddFromOrgView, OrganizationDetailQrCodeView, OrganizationDetailEditView, OrganizationDetailStaffView, OrganizationDetailStaffAddView, OrganizationDetailStaffAddByIdView, OrganizationDetailStaffAddByEmailView, OrganizationDetailStudentsView, OrganizationDetailStudentsAddView, OrganizationDetailStudentsAddByIdView, OrganizationDetailStudentsAddByEmailView, OrganizationDetailStudentsAddByNameView, OrganizationDetailStudentsAddByNameEmailView, OrganizationDetailStudentsAddByNameMobileView, PrivacyView, TosView, MyGroupsView, MyGroupsAddView, MyGroupsEditView, MyGroupsDetailView, MyGroupsDetailContactsView, MyGroupsDetailContactsAddView, MyGroupsDetailContactsAddByEmailView, MyGroupsDetailContactsAddMobilePhoneView, MyGroupsDetailContactsAddByIdView, MyGroupsDetailGroupAdminView) {
+], function (Controller, Model, UserModel, SettingHomeView, UserHomeView, UserContactPermissionsView, UserDefaultListView, UserAccessHomeView, UserAccessDetailView, UserAccessAddView, UserActivitiesHomeView, UserActivitiesListView, UserActivitiesDetailView, UserActivitiesDetailContactPermissionsView, UserKidsHomeView, UserKidsDetailView, UserKidsAddNewView, AddNewActivityHomeView, AddNewActivityQrCodeHomeView, AddNewActivityQrCodeScanView, AddNewActivityEnterCodeView, AddNewActivityDoneView, UserContactInfoView, OrganizationsAddView, OrganizationsHomeView, OrganizationDetailView, OrganizationGroupsListView, OrganizationGroupsAddView, OrganizationGroupsDetailView, OrganizationGroupsDetailEditView, OrganizationGroupsDetailStudentsView, OrganizationGroupsDetailStudentsAddView, OrganizationGroupsDetailStudentsAddByIdView, /*OrganizationGroupsDetailStudentsAddByNameView, */OrganizationGroupsDetailStudentsAddByNameEmailView, OrganizationGroupsDetailStudentsAddByNameMobileView, OrganizationGroupsDetailStudentsAddOrganizationView, OrganizationGroupsDetailStudentsAddOrganizationIndividualView, OrganizationGroupsDetailQrCodeView
+    , OrganizationGroupsDetailGroupAdminView, OrganizationGroupsDetailGroupAdminAddView, OrganizationGroupsDetailGroupAdminAddFromOrgView
+    , OrganizationGroupsDetailGroupClassParentView, OrganizationGroupsDetailGroupClassParentAddFromOrgView
+    , OrganizationDetailQrCodeView, OrganizationDetailEditView, OrganizationDetailStaffView, OrganizationDetailStaffAddView, OrganizationDetailStaffAddByIdView, OrganizationDetailStaffAddByEmailView, OrganizationDetailStudentsView, OrganizationDetailStudentsAddView, OrganizationDetailStudentsAddByIdView, OrganizationDetailStudentsAddByEmailView, OrganizationDetailStudentsAddByNameView, OrganizationDetailStudentsAddByNameEmailView, OrganizationDetailStudentsAddByNameMobileView, PrivacyView, TosView, MyGroupsView, MyGroupsAddView, MyGroupsEditView, MyGroupsDetailView, MyGroupsDetailContactsView, MyGroupsDetailContactsAddView, MyGroupsDetailContactsAddByEmailView, MyGroupsDetailContactsAddMobilePhoneView, MyGroupsDetailContactsAddByIdView, MyGroupsDetailGroupAdminView) {
     'use strict';
 
     var Controller = Controller.extend({
@@ -384,6 +389,31 @@ define([
                 region: 'main'
             });
         },
+
+        'organizations-groups-detail-groupclassparent': function (params) {
+            this.model = new Model();
+            this.view = new OrganizationGroupsDetailGroupClassParentView({
+                model: this.model,
+                region: 'main'
+            });
+        },
+
+        'organizations-groups-detail-groupclassparent-add': function (params) {
+            this.model = new Model();
+            this.view = new OrganizationGroupsDetailGroupClassParentAddView({
+                model: this.model,
+                region: 'main'
+            });
+        },
+
+        'organizations-groups-detail-groupclassparent-add-fromorg': function (params) {
+            this.model = new Model();
+            this.view = new OrganizationGroupsDetailGroupClassParentAddFromOrgView({
+                model: this.model,
+                region: 'main'
+            });
+        },
+
 
         'organizations-detail-qrcode': function(params) {
             this.model = new Model();

@@ -328,15 +328,14 @@ define(
                      */
                     Parse.Push.send({ //when push comes in then remove from native calendar
                         where: queryIOS,
-                        data: {
-                            alert: alert,
+                        data: { //note: for homework push, it should not make sound or alert for the user
                             badge: 1,
                             type: _Homework_Type,
-                            sound: "default",
-                            'content-available': 1, //Request clients to trigger background fetch
+                            sound: "",
                             sender: Parse.User.current().id,
                             objectId: homework.id
                         }
+
                     }, {
                         useMasterKey: true,
                         success: pushSuccess,

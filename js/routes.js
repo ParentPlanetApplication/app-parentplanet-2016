@@ -237,7 +237,13 @@ define( function () {
 		} ); //M12
 		match( 'setting-organizations-groups-detail-groupadmin-add-fromorg', 'setting#organizations-groups-detail-groupadmin-add-fromorg', {
 			name: 'setting-organizations-groups-detail-groupadmin-add-fromorg'
-		} ); //M13
+		}); //M13
+		match('setting-organizations-groups-detail-groupclassparent', 'setting#organizations-groups-detail-groupclassparent', {
+		    name: 'setting-organizations-groups-detail-groupclassparent'
+		}); //M11
+		match('setting-organizations-groups-detail-groupclassparent-add-fromorg', 'setting#organizations-groups-detail-groupclassparent-add-fromorg', {
+		    name: 'setting-organizations-groups-detail-groupclassparent-add-fromorg'
+		}); //M13
 		match( 'setting-organizations-detail-qrcode', 'setting#organizations-detail-qrcode', {
 			name: 'setting-organizations-detail-qrcode'
 		} ); //M14

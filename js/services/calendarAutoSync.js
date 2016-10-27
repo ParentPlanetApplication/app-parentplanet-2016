@@ -614,9 +614,7 @@ define([
 
                 function loadGroupsToSync() {
                     // Use deffered to prepare for future if we need to load data from server. 
-                    var deferred = $.Deferred();
-                    deferred.resolve(localStorageService.getWatchingGroups());
-                    return deferred;
+                    return localStorageService.getWatchingGroups();
                 }
 
                 loadGroupsToSync().then(syncGroups).always(

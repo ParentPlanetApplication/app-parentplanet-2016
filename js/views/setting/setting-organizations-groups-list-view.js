@@ -29,13 +29,34 @@ define([
         } else if (user.setting.permissonOfSelectedOrg == "teacher") {
             $("#newGroupBtn").removeClass("hidden");
             loadAccessibleOrgGroups();
+        } else if (user.setting.permissonOfSelectedOrg == "class parent") {
+            $("#newGroupBtn").removeClass("hidden");
+            var UserOrganizationGroupRelation = Parse.Object.extend("UserOrganizationGroupRelation", {}, {
+                query: function () {
+                    return new Parse.Query(this.className);
+                }
+            });
+            var query = UserOrganizationGroupRelation.query();
+            //query.equalTo("organizationId", user.setting.selectedOrgId);
+            query.equalTo("userId", user.id);
+            query.find({
+                success: function (results) {
+                    var orgs = [];
+                    for (var i = 0; i < results.length; i++) {
+                        orgs.push(results[i].get("organizationGroupId"));
+                    }
+                    loadOrgGroups(null, orgs);//["j96qGeVWvR"]
+                },
+                error: function (error) {
+                }
+            });
         } else {
             //You do not have access to any groups within organisations
             $("#content").html('<div style="text-align:center; padding:0 10px;">Permission denied</div>');
         }
     }
 
-    var loadOrgGroups = function(selectedGroupIdArray) {
+    var loadOrgGroups = function(selectedGroupIdArray, filter) {
         spinner = _createSpinner('spinner');
 
         var selectedOrgId = user.setting.selectedOrgId;
@@ -65,10 +86,15 @@ define([
                 } else {
                     for (var i = 0; i < results.length; i++) {
                         var group = results[i];
+                        if (filter) {
+                            if(filter.indexOf(group.id) < 0) {
+                                continue;
+                            }
+                        } 
                         $("#content").append('<div id="' + group.id + '" class="menu-item">   \
-                            <div class="text-left">' + group.get("name") + '</div>  \
-                            <div class="icon-right"><i class="icon-right-open"></i></div>  \
-                        </div>');
+                                <div class="text-left">' + group.get("name") + '</div>  \
+                                <div class="icon-right"><i class="icon-right-open"></i></div>  \
+                            </div>');
                         groupIdArray.push(group.id);
                         groupNameArray.push(group.get("name"));
                     } //eo for

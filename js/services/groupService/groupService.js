@@ -18,6 +18,10 @@ define([
             addStudentToGroupById: function(childId, orgId, orgName, orgType, groupId, groupName, redirectFunc) {
                 var handler = new AddStudentToGroupByIdHandler();
                 return handler.add(childId, orgId, orgName, orgType, groupId, groupName, redirectFunc);
+            },
+
+            addClassParentToGroup: function() {
+
             }
         };
 

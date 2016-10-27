@@ -1,29 +1,14 @@
-// define( [
-//     'chaplin',
-//     'views/base/view',
-//     'text!templates/index/home-view.hbs',
-//     'js/lib/draggabilly/draggabilly.pkgd.js',
-//     'moment',
-//     'text!data/basic.ics',
-//     'parseproxy',
-//     'parse',
-//     'handlebars',
-//     'text!templates/index/calendar-item.hbs'
-// ], function ( Chaplin, View, template, Draggabilly, moment, ics, ParseProxy, Parse, handlebars, template2 ) {
-// 	'use strict';
-//
 define([
     'chaplin',
     'views/base/view',
     'text!templates/index/home-view.hbs',
     'js/lib/draggabilly/draggabilly.pkgd.js',
     'moment',
-    'text!data/basic.ics',
     'parseproxy',
     'parse',
     'handlebars',
     'text!templates/index/calendar-item.hbs'
-], function(Chaplin, View, template, Draggabilly, moment, ics, ParseProxy, Parse, handlebars, template2) {
+], function(Chaplin, View, template, Draggabilly, moment, ParseProxy, Parse, handlebars, template2) {
     'use strict';
 
     var user; //declare at top scope
@@ -233,9 +218,9 @@ define([
                     title: ''
                 };
             }; //eo isCanceled
-       
+
             user = _getUserData(); //get user from local storage
-       
+
             $("#calendar-content").empty();
             elTemplate = handlebars.compile(elTemplate); //now is a function
             var allEvent = "";
@@ -246,7 +231,7 @@ define([
                 if (_unselectedActivityIdList.indexOf(event.orgIdForThisObject) == -1) {
                     cls = false; //add a 'first' class to the item if it immediately follows a date title
                     if (eventIdList.indexOf(event.objectId) != -1) {
-       
+
                         //Check date for displaying appropriated title
                         if (typeof event.startDateTime === 'string') { //updated events
                             date = moment(event.startDateTime).calendar();
@@ -255,7 +240,7 @@ define([
                             date = moment(event.startDateTime.iso).calendar();
                             date0 = moment(event.startDateTime.iso);
                         }
-       
+
                         if (dateIndex.indexOf(date) == -1) {
                             dateIndex.push(date);
                             dateArrayForCalendarWidget.push(date0.format("MM/DD/YY"));
@@ -295,9 +280,9 @@ define([
                             eventTitle: event.title,
                             time: time
                         }; // data that is injected into function el
-       
-                         el = '<div class=' + cls + ' type="calendar" uid="' + event.objectId + '" isRead="' + isRead + '" grp="' + grp +   '" clr="' + clr + '">';
-                         el += '<div class="text-wrapper">' + _getOrgIcon(event.groupType, color) + ' ' + prefix.title + event.title + '</div><div class="time-info">' + time + '</div>' + '</div>';
+
+                        el = '<div class=' + cls + ' type="calendar" uid="' + event.objectId + '" isRead="' + isRead + '" grp="' + grp + '" clr="' + clr + '">';
+                        el += '<div class="text-wrapper">' + _getOrgIcon(event.groupType, color) + ' ' + prefix.title + event.title + '</div><div class="time-info">' + time + '</div>' + '</div>';
                         el = elTemplate(context);
                         //el = $(el);
                         //$("#homebottom > #calendar-content").append(el);
@@ -311,9 +296,9 @@ define([
             if (contentCount == 0) {
                 $("#calendar-content").html('<div style="text-align:center;">You have no upcoming events</div>');
             }
-       
-       
-       
+
+
+
             //Create solid lines, dashed in css
             $(".content-title").each(function() {
                 $(this).prev().css("border-bottom", "solid 1px #ccc");

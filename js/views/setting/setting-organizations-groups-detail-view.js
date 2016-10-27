@@ -96,6 +96,28 @@ define([
       }); //eo groupAdminBtn click
     }
 
+    var showClassParentButton = function () {
+        var htmlItems = [
+          '<div id="groupClassParentBtn" class="menu-item">',
+          '<div class="text-left">Class Parent</div>',
+          '<div class="icon-right">',
+          '<i class="icon-right-open"></i>',
+          '</div>',
+          '</div>'
+        ];
+
+        $('.innerview-container').append(htmlItems.join(' '));
+
+        $("#groupClassParentBtn").on('click', function (e) {
+            $(this).addClass("bg-highlight-grey");
+            setTimeout(function () {
+                Chaplin.utils.redirectTo({
+                    name: 'setting-organizations-groups-detail-groupclassparent'
+                });
+            }, DEFAULT_ANIMATION_DELAY);
+        });
+    }
+
     var loadInfo = function(){
             var user = JSON.parse(localStorage.getItem("user"));
         var selectedOrgGroupId = user.setting.selectedOrgGroupId;
@@ -111,6 +133,7 @@ define([
         if( _isSuperAnim() || _isOrganizationAdmin()) {
           showEditButton();
           showGroupAdminButton();
+          showClassParentButton();
         }
     }; //eo loadInfo
 

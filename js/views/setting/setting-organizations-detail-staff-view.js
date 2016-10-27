@@ -47,7 +47,7 @@ define( [
 			'<option value="Faculty" ' + selectedText4Faculty + '>Faculty</option>' +
 			'<option value="Teacher" ' + selectedText4Teacher + '>Teacher</option>' +
 			'<option value="Nurse" ' + selectedText4Nurse + '>Nurse</option>' +
-			'<option value="Class Parent" ' + selectedText4ClassParent + '>Class Parent</option>' +
+//			'<option value="Class Parent" ' + selectedText4ClassParent + '>Class Parent</option>' +
 			'</select></div></div></div></div><div class="delete-btn hidden">Delete</div></div>' ); //eo content append
 	}; //eo addFullItem
 	var addItem = function ( staff ) {
