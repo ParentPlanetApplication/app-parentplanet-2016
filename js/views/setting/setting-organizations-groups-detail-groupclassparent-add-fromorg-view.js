@@ -92,7 +92,14 @@ define([
                                         currentStaffRelationDataArray = results3;
                                         if (results3.length > 0) {
                                             for (var i = 0; i < results3.length; i++) {
-                                                var name = results3[i].get("firstName") + " " + results3[i].get("lastName");
+                                                var firstName = results3[i].get("firstName");
+                                                var lastName = results3[i].get("lastName");
+                                                if (!firstName && !lastName) {
+                                                    firstName = results3[i].get("email");
+                                                    lastName = "";
+                                                }
+
+                                                var name = firstName + " " + lastName;
                                                 $("#content").append('<div id="' + results3[i].id + '" class="menu-item">  \
 <div class="text-left"><div class="circle-icon-wrapper"><i class="icon-fontello-circle icon-grey"></i></div> <span>' + name + '</span></div>   \
 </div>');

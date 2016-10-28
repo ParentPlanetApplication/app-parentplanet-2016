@@ -54,17 +54,41 @@ define([
                 } else {
                     for (var i = 0; i < results.length; i++) {
                         var relation = results[i];
-                        var name = relation.get("firstName") + " " + relation.get("lastName");
-                        $("#content").append('<div id="' + relation.get("userId") + '" class="menu-staff-editor white-bg">   \
-                            <div class="circle-icon-wrapper"><i class="icon-fontello-circle icon-grey"></i></div>   \
-                            <div class="info"><span>' + name + '</span>  \
-                                <div class="field"> \
-                                    <input class="input" type="text" placeholder="Position" value="' + relation.get("position") + '">   \
-                                </div>  \
+
+                        var firstName = relation.get("firstName");
+                        var lastName = relation.get("lastName");
+                        var name = firstName + " " + lastName;
+                        var userId = relation.get("userId");
+
+                        if (!firstName && !lastName) {
+                            name = "loading...";
+                            var userQuery = new Parse.Query(Parse.User);
+                            userQuery.equalTo("objectId", userId);
+                            userQuery.first({
+                                success: function (userResult) {
+                                    firstName = userResult.get("firstName");
+                                    lastName = userResult.get("lastName");
+                                    if (!firstName && !lastName) {
+                                        firstName = userResult.get("email");
+                                        lastName = "";
+                                    }
+
+                                    name = firstName + " " + lastName;
+                                    $("#replace" + userResult.id).text(name);
+                                }
+                            });
+                        }
+
+                        $("#content").append('<div id="' + userId + '" class="menu-staff-editor white-bg">   \
+                        <div class="circle-icon-wrapper"><i class="icon-fontello-circle icon-grey"></i></div>   \
+                        <div class="info"><span id="replace' + userId + '">' + name + '</span>  \
+                            <div class="field"> \
+                                <input class="input" type="text" placeholder="Position" value="' + relation.get("position") + '">   \
                             </div>  \
-                            <div class="delete-btn hidden">Delete</div>    \
+                        </div>  \
+                        <div class="delete-btn hidden">Delete</div>    \
                         </div>');
-                        staffIdArray.push(relation.get("userId"));
+                        staffIdArray.push(userId);
                         staffPositionArray.push(relation.get("position"));
                     }
 
