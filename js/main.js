@@ -175,6 +175,8 @@ require(['application', 'routes', 'jquery', 'modernizr', 'gumby', 'parse', 'back
                 }, 500);
             }; //eo resize
             var onDeviceReady = function() {
+                console.log('onDeviceReady()');
+                console.log(device);
                 _deviceReady = true;
                 var deferred = null; //handle asynchronous calls
                 var keyboard_min_height = 120; //Init iOS native keyboard handler

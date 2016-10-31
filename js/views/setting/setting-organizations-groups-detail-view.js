@@ -99,7 +99,7 @@ define([
     var showClassParentButton = function () {
         var htmlItems = [
           '<div id="groupClassParentBtn" class="menu-item">',
-          '<div class="text-left">Class Parent</div>',
+          '<div class="text-left">Parent Coordinator</div>',
           '<div class="icon-right">',
           '<i class="icon-right-open"></i>',
           '</div>',

@@ -5,11 +5,13 @@ define([
 
     function LocalStorageService() {
         var defaultStartSyncDate = new Date(2000, 1, 1);
-        
+
 
         var service = {
             getDeviceId: function () {
                 if (_isMobile()) {
+                    console.log('getDeviceId');
+                    console.log(device);
                     return device.uuid;
                 } else {
                     return null;
@@ -132,7 +134,7 @@ define([
                         groups.push(group);
                     } else {
                         if (group.calendarToSync != calendarToSync) {
-                            // Watching calendar changed => reset last sync date. 
+                            // Watching calendar changed => reset last sync date.
                             group.lastSyncDate = defaultStartSyncDate;
                         }
                     }
@@ -147,7 +149,7 @@ define([
                     self.setDeviceSettingWatchingGroups(groups);
                     deferred.resolve(group);
                 });
-                
+
                 return deferred;
             },
 

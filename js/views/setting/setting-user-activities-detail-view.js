@@ -112,11 +112,12 @@ define([
                                                 showPP = false;
 
                                                 whichCalendarToSync = "Android";
-                                                watchingGroup = localStorageService.addWatchingGroup(
+                                                localStorageService.addWatchingGroup(
                                                                     watchingGroup.userGroupRelationId,
                                                                     watchingGroup.groupId,
                                                                     whichCalendarToSync,
-                                                                    whichCalendarToSync != "None").done(function (result2) {
+                                                                    whichCalendarToSync != "None").done(function (watchingGroupResult) {
+                                                                        watchingGroup = watchingGroupResult;
                                                                         spinnerAustoSync.stop();
                                                                     });
 
@@ -136,11 +137,12 @@ define([
                                             initPopupCalendar(whichCalendarToSync, relation);
                                         }
                                     } else {
-                                        watchingGroup = localStorageService.addWatchingGroup(
+                                        localStorageService.addWatchingGroup(
                                         watchingGroup.userGroupRelationId,
                                         watchingGroup.groupId,
                                         whichCalendarToSync,
-                                        false).done(function (result2) {
+                                        false).done(function (watchingGroupResult) {
+                                            watchingGroup = watchingGroupResult;
                                             spinnerAustoSync.stop();
                                         });
                                     }
@@ -187,19 +189,27 @@ define([
                 whichCalendarToSync = selectedCalendar;
                 dirty = true;
 
-                watchingGroup = localStorageService.addWatchingGroup(
+                localStorageService.addWatchingGroup(
 					watchingGroup.userGroupRelationId,
 					watchingGroup.groupId,
 					whichCalendarToSync == "None" ? watchingGroup.calendarToSync : whichCalendarToSync,
-					whichCalendarToSync != "None");
+					whichCalendarToSync != "None").done(function (watchingGroupResult) {
+					    watchingGroup = watchingGroupResult;
+					    if (watchingGroup.isWatching) {
+					        _autoSyncWithCalendar(true);
+					        $('#calendar-sync-with').removeClass('hidden');
+					    }
 
-                if (watchingGroup.isWatching) {
-                    _autoSyncWithCalendar(true);
+					    $("#calendarToSync").text(watchingGroup.calendarToSync);
+					});;
+
+                if (whichCalendarToSync != "None") {
+                    $('#calendar-sync-with').removeClass('hidden');
+                    $("#calendarToSync").text(whichCalendarToSync);
                 } else {
-                    // Hide Sync with
                     $('#calendar-sync-with').addClass('hidden');
+                    $("#calendarAustoSyncBtn").prop('checked', "");
                 }
-                $("#calendarToSync").text(watchingGroup.calendarToSync);
             });
         };
         var initSynWith = function (isChecked) {

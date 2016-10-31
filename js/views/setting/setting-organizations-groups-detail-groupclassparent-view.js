@@ -28,7 +28,7 @@ define([
     var loadStaffs = function() {
         var spinner = _createSpinner('spinner');
 
-        $("#titleTxt").html("Class Parent - " + selectedGroupData.name);
+        $("#titleTxt").html("Parent Coordinator - " + selectedGroupData.name);
         //Load staffs
         var UserOrganizationGroupRelation = Parse.Object.extend("UserOrganizationGroupRelation", {}, {
           query: function(){
@@ -50,7 +50,7 @@ define([
                 localStorage.setItem("user", JSON.stringify(user));
 
                 if (results.length == 0) {
-                    $("#content").append('<div style="text-align:center;padding: 5px 10px 0 10px;">No class parent found</div>');
+                    $("#content").append('<div style="text-align:center;padding: 5px 10px 0 10px;">No parent coordinator found</div>');
                 } else {
                     for (var i = 0; i < results.length; i++) {
                         var relation = results[i];
